@@ -4,3 +4,4 @@
 
 export * from './lib/slideshow-lib.service';
 export * from './lib/slideshow-lib.component';
+export * from './lib/meterial-module'
