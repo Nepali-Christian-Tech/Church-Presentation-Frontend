@@ -1,5 +1,6 @@
 .slide-show-wrapper {
-    height: calc(100% - 40px);
+    position: relative;
+    height: calc(100% - 120px);
 
     &.fullscreen {
         z-index: 99;
@@ -9,14 +10,24 @@
         top: 0;
         left: 0;
         overflow: auto;
-    }
-}
 
-.document-actions {
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    border-radius: 50%;
-    height: fit-content;
-    width: 40px;
+        .document-actions {
+            .icon {
+                color: black !important;
+            }
+        }
+    }
+
+    .document-actions {
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        border-radius: 50%;
+        height: fit-content;
+        width: 40px;
+
+        .icon {
+            color: white !important;
+        }
+    }
 }

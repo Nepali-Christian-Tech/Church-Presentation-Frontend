@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
-import { SearchComponent } from '../search/search.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { SlideRendererComponent } from '../slide-renderer/slide-renderer.component';
 

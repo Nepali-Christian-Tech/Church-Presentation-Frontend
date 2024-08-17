@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { MaterialModule } from '../../../public-api';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
