@@ -1,0 +1,27 @@
+@import '../styles/varabiles.scss';
+
+mat-form-field {
+    &.search-field {
+        margin: 0;
+
+        .mat-mdc-text-field-wrapper {
+            padding-bottom: 1px;
+            border: 1px solid $color-border;
+            border-radius: 20px;
+            background: white;
+
+            .mdc-line-ripple {
+                display: none;
+            }
+        }
+
+        .mat-mdc-form-field-subscript-wrapper {
+            display: none;
+        }
+    }
+
+    &.width-100 {
+        width: 100%;
+    }
+
+}

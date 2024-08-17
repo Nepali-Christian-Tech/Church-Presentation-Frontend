@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [],
+  imports: [MaterialModule, SearchComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
