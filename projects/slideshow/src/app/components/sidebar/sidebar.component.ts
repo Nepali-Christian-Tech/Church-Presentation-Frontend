@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
-import { SearchComponent } from '../search/search.component';
+import { MaterialModule ,SearchComponent} from '../../../../../slideshow-lib/src/public-api';
 
 @Component({
   selector: 'app-sidebar',

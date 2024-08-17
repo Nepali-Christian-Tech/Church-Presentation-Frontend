@@ -3,10 +3,10 @@
         <button mat-icon-button [matTooltip]='showInFullscreen?"Exit Fullscreen":"Fullscreen"'
             (click)='toggleFullscreen()'>
             @if (!showInFullscreen) {
-            <mat-icon>fullscreen</mat-icon>
+            <mat-icon class="icon">fullscreen</mat-icon>
             }
             @if (showInFullscreen) {
-            <mat-icon>fullscreen_exit</mat-icon>
+            <mat-icon class="icon">fullscreen_exit</mat-icon>
             }
         </button>
     </div>

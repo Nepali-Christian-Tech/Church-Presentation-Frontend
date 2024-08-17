@@ -2,6 +2,5 @@
  * Public API Surface of slideshow-lib
  */
 
-export * from './lib/slideshow-lib.service';
-export * from './lib/slideshow-lib.component';
-export * from './lib/meterial-module'
+export * from './lib/modules/meterial-module'
+export * from './lib/components/search/search.component'
