@@ -3,12 +3,16 @@
 mat-form-field {
     &.search-field {
         margin: 0;
+        max-height: 53px;
 
         .mat-mdc-text-field-wrapper {
             padding-bottom: 1px;
             border: 1px solid $color-border;
-            border-radius: 20px;
-            background: white;
+            border-radius: 12px;
+
+            .mat-mdc-form-field-flex{
+                height: 100% !important;
+            }
 
             .mdc-line-ripple {
                 display: none;
@@ -24,4 +28,12 @@ mat-form-field {
         width: 100%;
     }
 
+}
+
+.mat-divider-horizontal{
+    border-top-color: $color-border !important;
+}
+
+.mat-drawer{
+    border-radius: unset !important;
 }

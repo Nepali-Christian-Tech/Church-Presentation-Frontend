@@ -1,5 +1,18 @@
-<mat-tab-group>
-    <mat-tab label="Song"></mat-tab>
-    <mat-tab label="Bible"></mat-tab>
-</mat-tab-group>
-<app-search></app-search>
+<div class="upper-navbar-wrapper padding-10">
+    <mat-nav-list class="nav-list font-heavy">
+        <a class="nav-tab flex-1 text-center" [class.active]="defaultActiveMenu=='song'" mat-ripple
+            (click)="onMenuClick('song')">
+            Song
+        </a>
+        <a class="nav-tab flex-1 text-center" [class.active]="defaultActiveMenu=='bible'" mat-ripple
+            (click)="onMenuClick('bible')">
+            Bible
+        </a>
+    </mat-nav-list>
+    <div class="margin-t-10 padding-t-10 margin-b-10 padding-b-10">
+        <app-search></app-search>
+    </div>
+</div>
+<div class="padding-10">
+    here something
+</div>

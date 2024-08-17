@@ -6,6 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { MatTabsModule } from '@angular/material/tabs';
         MatDividerModule,
         MatFormFieldModule,
         MatInputModule,
-        MatTabsModule
+        MatTabsModule,
+        MatListModule
     ],
     exports: [
         MatSidenavModule,
@@ -24,7 +26,8 @@ import { MatTabsModule } from '@angular/material/tabs';
         MatDividerModule,
         MatFormFieldModule,
         MatInputModule,
-        MatTabsModule
+        MatTabsModule,
+        MatListModule
     ]
 })
 export class MaterialModule { }

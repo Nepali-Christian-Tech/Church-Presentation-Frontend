@@ -11,4 +11,10 @@ import { SearchComponent } from '../search/search.component';
 })
 export class SidebarComponent {
 
+  defaultActiveMenu: string = 'song';
+
+  onMenuClick(menuType: string): void {
+    this.defaultActiveMenu = menuType;
+  }
+
 }
