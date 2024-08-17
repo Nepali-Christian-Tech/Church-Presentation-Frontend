@@ -1,0 +1,22 @@
+.slide-show-wrapper {
+    height: calc(100% - 40px);
+
+    &.fullscreen {
+        z-index: 99;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        overflow: auto;
+    }
+}
+
+.document-actions {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    border-radius: 50%;
+    height: fit-content;
+    width: 40px;
+}

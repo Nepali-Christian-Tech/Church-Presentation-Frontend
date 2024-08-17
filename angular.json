@@ -87,6 +87,7 @@
               }
             ],
             "styles": [
+              "projects/slideshow/src/custom-theme.scss", 
               "projects/slideshow/src/styles.scss"
             ],
             "scripts": []

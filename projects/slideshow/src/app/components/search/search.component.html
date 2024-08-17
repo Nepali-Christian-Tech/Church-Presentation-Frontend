@@ -1,1 +1,11 @@
-<p>search works!</p>
+<mat-form-field appearance="fill" class="search-field w-100 font-10">
+    <div class="flex">
+        <input matInput [formControl]='searchForm' placeholder="search here.." class="font-14">
+        @if (!haveSeachValue) {
+        <mat-icon>search</mat-icon>
+        }
+        @if (haveSeachValue) {
+        <mat-icon class="clear" (click)="clearSearch()">highlight_off</mat-icon>
+        }
+    </div>
+</mat-form-field>

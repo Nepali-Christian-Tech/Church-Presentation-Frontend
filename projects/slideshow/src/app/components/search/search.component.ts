@@ -1,12 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [],
+  imports: [MaterialModule, ReactiveFormsModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
 export class SearchComponent {
 
+  searchForm: FormControl = new FormControl;
+
+  @Output()
+  searchTextChanged: EventEmitter<string> = new EventEmitter();
+
+  private subscription: Subscription;
+
+  constructor() {
+    this.subscription = this.searchForm.valueChanges.subscribe((value) => {
+      this.searchTextChanged.emit(value);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  get haveSeachValue(): boolean { return !!this.searchForm.value }
+
+  clearSearch() {
+    this.searchForm.reset();
+  }
 }

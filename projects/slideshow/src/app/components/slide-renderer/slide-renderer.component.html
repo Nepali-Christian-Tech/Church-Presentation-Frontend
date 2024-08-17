@@ -1,1 +1,17 @@
-<p>side-renderer works!</p>
+<div class="slide-show-wrapper bg-white w-100 padding-10" [class.fullscreen]='showInFullscreen'>
+    <div class='document-actions'>
+        <button mat-icon-button [matTooltip]='showInFullscreen?"Exit Fullscreen":"Fullscreen"'
+            (click)='toggleFullscreen()'>
+            @if (!showInFullscreen) {
+            <mat-icon>fullscreen</mat-icon>
+            }
+            @if (showInFullscreen) {
+            <mat-icon>fullscreen_exit</mat-icon>
+            }
+        </button>
+    </div>
+
+    <div class="padding-10">
+        <p class="text-center">slide-show render</p>
+    </div>
+</div>
