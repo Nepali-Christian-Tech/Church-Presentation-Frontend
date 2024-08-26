@@ -1,18 +1,19 @@
-<div class="upper-navbar-wrapper padding-10">
-    <mat-nav-list class="nav-list font-heavy">
-        <a class="nav-tab flex-1 text-center" [class.active]="defaultActiveMenu=='song'" mat-ripple
-            (click)="onMenuClick('song')">
-            Song
+<div class="upper-navbar-wrapper padding-10 sticky-top">
+    <nav mat-tab-nav-bar mat-align-tabs='center' [tabPanel]="myTabPanel">
+        <a mat-tab-link [routerLink]='"songs"' #songListLink='routerLinkActive' routerLinkActive
+            [active]='songListLink.isActive' replaceUrl='true' mat-ripple>
+            Songs
         </a>
-        <a class="nav-tab flex-1 text-center" [class.active]="defaultActiveMenu=='bible'" mat-ripple
-            (click)="onMenuClick('bible')">
-            Bible
+        <a mat-tab-link [routerLink]='"bible"' #templateLink='routerLinkActive' routerLinkActive
+            [active]='templateLink.isActive' replaceUrl='true' mat-ripple>
+            bible
         </a>
-    </mat-nav-list>
-    <div class="margin-t-10 padding-t-10 margin-b-10 padding-b-10">
+    </nav>
+    <div class="margin-t-10 padding-t-10 padding-b-10 ">
         <app-search></app-search>
     </div>
 </div>
-<div class="padding-10">
-    here something
-</div>
+
+<mat-tab-nav-panel #myTabPanel>
+    <router-outlet></router-outlet>
+</mat-tab-nav-panel>

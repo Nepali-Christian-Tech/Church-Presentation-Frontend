@@ -1,0 +1,7 @@
+<mat-action-list class='overflow bg-white padding-10'>
+    @for (bhajan of bhajanList; track $index) {
+    <mat-list-item (click)="onBhajanSelect(bhajan)" [class.active]="selectedBhajan?.id === bhajan.id">
+        <span class="font-14">{{bhajan.id}}. {{bhajan.title}}</span>
+    </mat-list-item>
+    }
+</mat-action-list>

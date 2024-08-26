@@ -10,7 +10,7 @@ mat-form-field {
             border: 1px solid $color-border;
             border-radius: 12px;
 
-            .mat-mdc-form-field-flex{
+            .mat-mdc-form-field-flex {
                 height: 100% !important;
             }
 
@@ -30,10 +30,31 @@ mat-form-field {
 
 }
 
-.mat-divider-horizontal{
+.mat-divider-horizontal {
     border-top-color: $color-border !important;
 }
 
-.mat-drawer{
+.mat-drawer {
     border-radius: unset !important;
+}
+
+mat-action-list {
+    border-radius: 4px;
+    padding: 10px !important;
+
+    mat-list-item {
+        border-bottom: 1px solid $color-border;
+        height: 57px !important;
+    }
+
+    mat-list-item.active {
+        background-color: #e3f4f9;
+        border-left: 6px solid #7dbdd0;
+
+        &.active {
+            span {
+                font-weight: 500;
+            }
+        }
+    }
 }
