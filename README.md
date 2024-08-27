@@ -3,7 +3,7 @@
 ### Angular version 18.2.0.
 
 
-"# Run Project
+## Run Project
 - Navigate to the main project directory.
 - Install the required dependencies:
 - `npm install`
