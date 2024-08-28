@@ -1,6 +1,6 @@
-<div class="slide-show-wrapper bg-white w-100 padding-10" [class.fullscreen]='showInFullscreen'>
+<div class="slide-show-wrapper m-6 h-[calc(100%-48px)]" [class.fullscreen]='showInFullscreen'>
     <div class='document-actions'>
-        <button mat-icon-button [matTooltip]='showInFullscreen?"Exit Fullscreen":"Fullscreen"'
+        <button mat-icon-button [matTooltip]='showInFullscreen? "Exit Fullscreen":"Fullscreen"'
             (click)='toggleFullscreen()'>
             @if (!showInFullscreen) {
             <mat-icon class="icon">fullscreen</mat-icon>
@@ -11,7 +11,9 @@
         </button>
     </div>
 
-    <div class="padding-10">
-        <p class="text-center">slide-show render</p>
+    <div>
+        <p class="text-center text-large text-2xl">
+            slide-show render
+        </p>
     </div>
 </div>

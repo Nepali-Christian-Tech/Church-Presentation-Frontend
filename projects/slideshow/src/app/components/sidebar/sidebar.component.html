@@ -1,19 +1,21 @@
-<div class="upper-navbar-wrapper padding-10 sticky-top">
+<div class="sticky top-0 z-10 p-3 bg-white-smokyWhite border-b border-coffee-300">
     <nav mat-tab-nav-bar mat-align-tabs='center' [tabPanel]="myTabPanel">
         <a mat-tab-link [routerLink]='"songs"' #songListLink='routerLinkActive' routerLinkActive
-            [active]='songListLink.isActive' replaceUrl='true' mat-ripple>
-            Songs
+            [active]='songListLink.isActive' replaceUrl='true' mat-ripple >
+            <span class="text-primary-950">Songs</span>
         </a>
         <a mat-tab-link [routerLink]='"bible"' #templateLink='routerLinkActive' routerLinkActive
             [active]='templateLink.isActive' replaceUrl='true' mat-ripple>
-            bible
+            <span class="text-primary-950">bible</span>
         </a>
     </nav>
-    <div class="margin-t-10 padding-t-10 padding-b-10 ">
+    <div class="pt-3" >
         <app-search></app-search>
     </div>
 </div>
 
 <mat-tab-nav-panel #myTabPanel>
-    <router-outlet></router-outlet>
+    <div class="overflow-y-auto">
+        <router-outlet></router-outlet>
+    </div>
 </mat-tab-nav-panel>

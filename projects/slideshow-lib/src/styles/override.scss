@@ -1,0 +1,15 @@
+mat-action-list {
+    border-radius: 4px;
+    padding: 10px !important;
+
+    mat-list-item.active{
+        background-color: #e0f3fe;
+        border-left: 6px solid #0289c7;
+
+        &.active {
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+}

@@ -1,10 +1,12 @@
-<mat-drawer-container class="main-container">
+<mat-drawer-container class="h-screen">
     @if (!isFullScreen) {
-        <mat-drawer class="side-navbar" mode="side" opened >
-            <app-sidebar></app-sidebar>
+        <mat-drawer mode="side" opened  >
+            <div class="border-r border-coffee-300 h-auto min-h-full">
+                <app-sidebar></app-sidebar>
+            </div>
         </mat-drawer>
     }
-    <mat-drawer-content class="padding-10 slide-show-container">
+    <mat-drawer-content class="slide-shpw-container">
         <app-slide-renderer (isFullScreen)="whenFullScreen($event)"></app-slide-renderer>
     </mat-drawer-content>
 </mat-drawer-container>
