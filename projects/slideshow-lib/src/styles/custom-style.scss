@@ -1,2 +1,10 @@
 @import './colors.scss';
 
+// revealJS
+.reveal-wrapper {
+    height: 100%;
+
+    .reveal {
+        height: 100%;
+    }
+}
