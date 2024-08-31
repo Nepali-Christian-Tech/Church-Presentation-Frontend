@@ -29,7 +29,7 @@ export class SearchComponent {
     this.subscription.unsubscribe();
   }
 
-  get haveSeachValue(): boolean { return !!this.searchForm.value }
+  get haveSearchValue(): boolean { return !!this.searchForm.value }
 
   clearSearch() {
     this.searchForm.reset();

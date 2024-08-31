@@ -11,9 +11,11 @@
         </button>
     </div>
 
-    <div>
-        <p class="text-center text-large">
-            slide-show render
-        </p>
+    <div class="p-3">
+        <ng-container *ngTemplateOutlet="slideShowTemplate"></ng-container>
     </div>
 </div>
+
+<ng-template #slideShowTemplate>
+    <p>Slide show</p>
+</ng-template>
