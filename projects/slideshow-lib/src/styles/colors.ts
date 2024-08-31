@@ -41,8 +41,8 @@ export const COLOR_PALETTE = {
     white:{
         'smokyWhite': '#efefee',
     },
-    color:{
-        'border-color': '#ddd2d2'
+    border:{
+        'light': '#ddd2d2'
     },
     status: {
         success: 'green',

@@ -1,15 +1,61 @@
+@import './colors.scss';
+
 mat-action-list {
-    border-radius: 4px;
-    padding: 10px !important;
 
-    mat-list-item.active{
-        background-color: #e0f3fe;
-        border-left: 6px solid #0289c7;
+    // sidebar select button
+    &.song-list,
+    &.bible-list {
+        mat-list-item {
+            border-bottom: 1px solid $border;
+            height: 57px !important;
 
-        &.active {
-            span {
-                font-weight: 500;
+            &.active {
+                border-left: 6px solid $primary-medium;
+                background-color: $primary-light;
+
+                span {
+                    font-weight: 500;
+                }
             }
+        }
+    }
+}
+
+
+a {
+
+    // sidebar list
+    &.select-song,
+    &.select-bible {
+
+        &.mdc-tab--active {
+            .mdc-tab-indicator {
+                .mdc-tab-indicator__content--underline {
+                    border-color: $primary-dark
+                }
+            }
+        }
+    }
+}
+
+
+mat-form-field {
+
+    // search input
+    &.search-field {
+        border: 1px solid $border;
+        border-radius: 4px;
+        height: 53px !important;
+
+        .mdc-line-ripple.mdc-line-ripple--active,
+        .mdc-line-ripple.mdc-line-ripple--deactivating,
+        .mat-mdc-form-field-subscript-wrapper {
+            display: none;
+        }
+
+        input {
+            font-size: 0.875rem !important;
+            line-height: 1.25rem !important;
         }
     }
 }

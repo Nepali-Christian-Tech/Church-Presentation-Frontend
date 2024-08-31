@@ -1,4 +1,4 @@
-<div class="slide-show-wrapper m-6 h-[calc(100%-48px)]" [class.fullscreen]='showInFullscreen'>
+<div class="slide-show-wrapper m-6 h-[calc(100%-48px)] rounded" [class.fullscreen]='showInFullscreen'>
     <div class='document-actions'>
         <button mat-icon-button [matTooltip]='showInFullscreen? "Exit Fullscreen":"Fullscreen"'
             (click)='toggleFullscreen()'>
@@ -12,7 +12,7 @@
     </div>
 
     <div>
-        <p class="text-center text-large text-2xl">
+        <p class="text-center text-large">
             slide-show render
         </p>
     </div>

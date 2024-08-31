@@ -1,6 +1,6 @@
 <mat-form-field appearance="fill" class="search-field">
     <div class="flex">
-        <input matInput [formControl]='searchForm' placeholder="search here..">
+        <input matInput class="text-sm" [formControl]='searchForm' placeholder="search here.." >
         @if (!haveSeachValue) {
         <mat-icon>search</mat-icon>
         }

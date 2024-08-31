@@ -147,8 +147,7 @@
               }
             ],
             "styles": [
-              "projects/slideshow/src/styles.scss",
-              "projects/slideshow-lib/src/styles/_index.scss"
+              "projects/slideshow/src/styles.scss"
             ],
             "scripts": []
           }
