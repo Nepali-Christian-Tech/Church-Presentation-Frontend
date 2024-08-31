@@ -5,7 +5,7 @@ export const bhajanList = [
     },
     {
         id: 27,
-        title: 'Aja ko din'
+        title: 'Aja ko dinKhusi khusi mana Khusi khusi mana'
     },
     {
         id: 28,
@@ -13,7 +13,7 @@ export const bhajanList = [
     },
     {
         id: 1,
-        title: 'Jay hos yeshu rajako'
+        title: 'Jay hos yeshu rajako Jay hos yeshu rajakoKhusi khusi mana'
     },
     {
         id: 11,
