@@ -27,7 +27,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4  # Updated to a stable version
         with:
-          images: my-docker-hub-namespace/my-docker-hub-repository
+          images: nepalichristiantech/church-presentation
 
       - name: Build and push Docker image
         id: push
