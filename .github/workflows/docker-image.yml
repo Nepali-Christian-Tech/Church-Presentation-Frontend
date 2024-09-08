@@ -45,3 +45,7 @@ jobs:
           subject-name: ${{ secrets.REGISTRY }}/${{ secrets.IMAGE_NAME }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+      - name: Trigger Webhook
+        run: |
+          curl --request GET "${{ secrets.WEBHOOK }}" \
+            --header "Authorization: Bearer ${{ secrets.TOKEN }}"
