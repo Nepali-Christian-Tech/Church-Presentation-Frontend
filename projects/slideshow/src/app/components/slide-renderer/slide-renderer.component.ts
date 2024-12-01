@@ -1,9 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
 import { CommonModule } from '@angular/common';
-
-import Reveal from 'reveal.js';
-import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
 
 @Component({
   selector: 'app-slide-renderer',
@@ -12,30 +9,44 @@ import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
   templateUrl: './slide-renderer.component.html',
   styleUrl: './slide-renderer.component.scss'
 })
-export class SlideRendererComponent implements OnInit {
+export class SlideRendererComponent {
 
-  showInFullscreen = false;
+  showInFullscreen: boolean = false;
+  showButton: boolean = false;
+  
+  private hideButtonTimeout: any;
+  private isMouseInside: boolean = false;
 
   @Output()
   isFullScreen: EventEmitter<boolean> = new EventEmitter();
-
-  ngOnInit(): void {
-    this.initializeRevealJS();
-  }
 
   toggleFullscreen(): void {
     this.showInFullscreen = !this.showInFullscreen;
     this.isFullScreen.emit(this.showInFullscreen);
   }
 
-  private initializeRevealJS(): void {
-    let deck = new Reveal(
-      {
-        plugins: [Markdown],
-        loop: true,
-      },
-    );
-    deck.initialize();
+  onMouseEnter(): void {
+    this.isMouseInside = true;
+    this.showButton = true;
+    this.clearHideTimeout();
   }
 
+  onMouseLeave(): void {
+    this.isMouseInside = false;
+    this.setHideTimeout();
+  }
+
+  private setHideTimeout(): void {
+    this.hideButtonTimeout = setTimeout(() => {
+      if (!this.isMouseInside) {
+        this.showButton = false;
+      }
+    }, 3000);
+  }
+
+  private clearHideTimeout(): void {
+    if (this.hideButtonTimeout) {
+      clearTimeout(this.hideButtonTimeout);
+    }
+  }
 }
