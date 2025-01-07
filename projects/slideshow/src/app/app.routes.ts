@@ -20,5 +20,9 @@ export const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'presentation',
+        loadComponent: () => import('./components/index').then(m => m.PresentationComponent)
+    },
     { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

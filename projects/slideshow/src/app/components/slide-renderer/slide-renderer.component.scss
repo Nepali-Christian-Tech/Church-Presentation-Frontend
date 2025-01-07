@@ -14,12 +14,11 @@
 
     .document-actions {
         position: fixed;
-        right: 20px;
-        top: 20px;
+        right: 8px;
+        top: 3px;
         border-radius: 50%;
         height: fit-content;
         width: 40px;
-        background-color: $white-smoky;
         z-index: 9999;
 
         .icon {

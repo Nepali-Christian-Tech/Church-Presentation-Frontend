@@ -15,10 +15,22 @@ import { SlideRendererComponent } from '../slide-renderer/slide-renderer.compone
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  
-  isFullScreen: boolean = false; 
+
+  isFullScreen: boolean = false;
+  isSidebarOpen: boolean = false;
 
   whenFullScreen(event: boolean): void {
     this.isFullScreen = event;
+    this.hideSidebar();
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  private hideSidebar(): void {
+    if (this.isFullScreen) {
+      this.isSidebarOpen = false;
+    }
   }
 }

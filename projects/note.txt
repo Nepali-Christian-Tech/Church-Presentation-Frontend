@@ -1,0 +1,8 @@
+
+RevealJS plugins
+- https://martinomagnifico.github.io/
+- https://github.com/rajgoel/reveal.js-plugins
+- https://github.com/rajgoel/reveal.js-plugins/blob/master/README.md
+- https://martinomagnifico.github.io/reveal.js-appearance/demo/demo.html#/7
+- https://quarto.org/docs/extensions/revealjs.html
+- https://github.com/rajgoel/reveal.js-plugins/blob/master/seminar/README.md

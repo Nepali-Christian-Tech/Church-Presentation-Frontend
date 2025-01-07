@@ -1,34 +1,24 @@
-<div class="slide-show-wrapper m-16 h-[calc(100%-128px)] rounded" [class.fullscreen]='showInFullscreen'>
-    <div class='document-actions'>
-        <button mat-icon-button [matTooltip]='showInFullscreen? "Exit Fullscreen":"Fullscreen"'
-            (click)='toggleFullscreen()'>
-            @if (!showInFullscreen) {
-            <mat-icon class="icon">fullscreen</mat-icon>
-            }
-            @if (showInFullscreen) {
-            <mat-icon class="icon">fullscreen_exit</mat-icon>
-            }
-        </button>
+<div class="slide-show-wrapper m-10 h-[calc(100%-80px)] 
+    rounded"
+    [class.fullscreen]="showInFullscreen"
+    (mouseenter)="onMouseEnter()" 
+    (mouseleave)="onMouseLeave()">
+
+    <div class="document-actions transition-opacity duration-300 ease-in-out">
+        <ng-container *ngIf="showButton">
+            <ng-container *ngTemplateOutlet="fullscreenControlTemplate"></ng-container>
+        </ng-container>
     </div>
 
-    <div class="reveal p-3">
-        <div class="slides">
-            <ng-container *ngTemplateOutlet="slideShowTemplate"></ng-container>
-        </div>
+    <div class="p-3">
+        <p>Show details of selected option</p>
     </div>
 </div>
 
-<ng-template #slideShowTemplate>
-    <section data-background-color="rgb(70, 70, 255)">
-        <h1 class="text-primary-950">Slide 1</h1>
-    </section>
-    <section data-background-color="aquamarine">
-        <h1 class="text-primary-950">Slide 2</h1>
-    </section>
-    <section data-background-gradient="linear-gradient(to bottom, #283b95, #17b2c3)">
-        <h1 class="text-primary-50">
-            Slide 3
-        </h1>
-        <h2>🐳</h2>
-    </section>
+<ng-template #fullscreenControlTemplate>
+    <button mat-icon-button [matTooltip]="showInFullscreen ? 'Exit Fullscreen' : 'Fullscreen'" 
+        (click)="toggleFullscreen()">
+        <mat-icon *ngIf="!showInFullscreen" class="icon">fullscreen</mat-icon>
+        <mat-icon *ngIf="showInFullscreen" class="icon">fullscreen_exit</mat-icon>
+    </button>
 </ng-template>
