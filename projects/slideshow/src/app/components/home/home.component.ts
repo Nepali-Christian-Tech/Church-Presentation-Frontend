@@ -1,36 +1,21 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, Renderer2, ViewChild } from '@angular/core';
 import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
-import { SidebarComponent } from '../sidebar/sidebar.component';
-import { SlideRendererComponent } from '../slide-renderer/slide-renderer.component';
+import { CommonModule } from '@angular/common';
+import { MatDrawer } from '@angular/material/sidenav';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
+    CommonModule,
+    RouterModule,
     MaterialModule,
-    SidebarComponent,
-    SlideRendererComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
 
-  isFullScreen: boolean = false;
-  isSidebarOpen: boolean = false;
 
-  whenFullScreen(event: boolean): void {
-    this.isFullScreen = event;
-    this.hideSidebar();
-  }
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
-
-  private hideSidebar(): void {
-    if (this.isFullScreen) {
-      this.isSidebarOpen = false;
-    }
-  }
 }

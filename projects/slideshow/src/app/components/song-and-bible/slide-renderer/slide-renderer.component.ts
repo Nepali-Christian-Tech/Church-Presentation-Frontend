@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 import { CommonModule } from '@angular/common';
 
 @Component({

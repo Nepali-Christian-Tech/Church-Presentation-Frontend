@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { bhajanList } from './server';
-import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 import { CommonModule } from '@angular/common';
 
 @Component({

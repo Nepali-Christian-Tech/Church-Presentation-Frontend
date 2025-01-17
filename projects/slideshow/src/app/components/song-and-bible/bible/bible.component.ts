@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { bhajanList } from '../songs/server';
-import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 
 @Component({
   selector: 'app-bible',

@@ -2,8 +2,12 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        path: '',
-        loadComponent: () => import('./components/index').then(m => m.HomeComponent),
+        path:'',
+        loadComponent: () => import('./components/index').then(m => m.HomeComponent)
+    },
+    {
+        path: 'bible-bhajan',
+        loadComponent: () => import('../app/components/song-and-bible').then(m => m.HomeComponent),
         children: [
             {
                 path: '',
@@ -12,11 +16,11 @@ export const routes: Routes = [
             },
             {
                 path: 'songs',
-                loadComponent: () => import('./components/index').then(m => m.SongsComponent)
+                loadComponent: () => import('../app/components/song-and-bible').then(m => m.SongsComponent)
             },
             {
                 path: 'bible',
-                loadComponent: () => import('./components/index').then(m => m.BibleComponent)
+                loadComponent: () => import('../app/components/song-and-bible').then(m => m.BibleComponent)
             }
         ]
     },

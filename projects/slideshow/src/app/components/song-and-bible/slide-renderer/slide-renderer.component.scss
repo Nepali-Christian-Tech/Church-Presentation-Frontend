@@ -1,4 +1,4 @@
-@import '../../../../../slideshow-lib/src/styles/colors.scss';
+@import '../../../../../../slideshow-lib/src/styles/colors.scss';
 
 .slide-show-wrapper {
     position: relative;
@@ -14,7 +14,7 @@
 
     .document-actions {
         position: fixed;
-        right: 8px;
+        right: 1px;
         top: 3px;
         border-radius: 50%;
         height: fit-content;
@@ -24,6 +24,30 @@
         .icon {
             color: black !important;
             z-index: 99;
+        }
+    }
+}
+
+::ng-deep {
+    .mat-drawer {
+        .mat-drawer-inner-container {
+            overflow: unset;
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .slide-show-wrapper {
+        .document-actions {
+            right: 26px;
+        }
+    }
+}
+
+@media (max-width: 375px) {
+    ::ng-deep {
+        .mat-drawer {
+            width: 300px;
         }
     }
 }

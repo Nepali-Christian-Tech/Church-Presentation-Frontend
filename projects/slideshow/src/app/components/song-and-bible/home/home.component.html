@@ -1,0 +1,17 @@
+<mat-drawer-container class="h-screen">
+    @if (!isFullScreen) {
+    <mat-drawer mode="over" [opened]="isSidebarOpen">
+        <div class="border-coffee-300 h-auto min-h-full">
+            <app-sidebar></app-sidebar>
+        </div>
+    </mat-drawer>
+    }
+    <mat-drawer-content class="slide-show-container">
+        @if (!isFullScreen) {
+        <button mat-icon-button (click)="toggleSidebar($event)" class="menu">
+            <mat-icon class="white-smokyWhite">menu</mat-icon>
+        </button>
+        }
+        <app-slide-renderer (isFullScreen)="whenFullScreen($event)"></app-slide-renderer>
+    </mat-drawer-content>
+</mat-drawer-container>

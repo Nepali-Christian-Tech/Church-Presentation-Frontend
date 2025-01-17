@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MaterialModule ,SearchComponent} from '../../../../../slideshow-lib/src/public-api';
+import { MaterialModule ,SearchComponent} from '../../../../../../slideshow-lib/src/public-api';
 import { RouterModule } from '@angular/router';
 
 @Component({

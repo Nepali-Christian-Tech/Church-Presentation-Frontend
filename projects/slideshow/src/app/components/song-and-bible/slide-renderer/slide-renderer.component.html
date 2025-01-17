@@ -1,5 +1,10 @@
-<div class="slide-show-wrapper m-10 h-[calc(100%-80px)] 
-    rounded"
+<div class="slide-show-wrapper 
+    h-[calc(100vh-80px)] 
+    my-10 mx-3 lg:m-10 xl:m-12
+    sm:h-[calc(100vh-60px)] 
+    md:h-[calc(100vh-80px)] 
+    lg:h-[calc(100vh-80px)]
+    xl:h-[calc(100vh-100px)]"
     [class.fullscreen]="showInFullscreen"
     (mouseenter)="onMouseEnter()" 
     (mouseleave)="onMouseLeave()">
@@ -10,10 +15,14 @@
         </ng-container>
     </div>
 
-    <div class="p-3">
+    <div class="p-3 sm:p-4 md:p-8 lg:p-10 xl:p-12">
         <p>Show details of selected option</p>
-    </div>
+    </div>   
 </div>
+
+
+
+
 
 <ng-template #fullscreenControlTemplate>
     <button mat-icon-button [matTooltip]="showInFullscreen ? 'Exit Fullscreen' : 'Fullscreen'" 
