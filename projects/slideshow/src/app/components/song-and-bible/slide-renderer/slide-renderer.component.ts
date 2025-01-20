@@ -1,24 +1,48 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, inject, OnDestroy, OnInit, Output } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
+import { ShareService } from '../services';
 
 @Component({
   selector: 'app-slide-renderer',
   standalone: true,
   imports: [MaterialModule, CommonModule],
   templateUrl: './slide-renderer.component.html',
-  styleUrl: './slide-renderer.component.scss'
+  styleUrls: ['./slide-renderer.component.scss']
 })
-export class SlideRendererComponent {
+export class SlideRendererComponent implements OnInit, OnDestroy {
 
   showInFullscreen: boolean = false;
   showButton: boolean = false;
-  
-  private hideButtonTimeout: any;
-  private isMouseInside: boolean = false;
+  showBhajan: boolean = false;
+  showBible: boolean = false;
+  currentData: any = null;
 
   @Output()
   isFullScreen: EventEmitter<boolean> = new EventEmitter();
+
+  private readonly HIDE_BUTTON_TIMEOUT_MS = 3000;
+  private hideButtonTimeout: any;
+  private isMouseInside: boolean = false;
+
+  private readonly destroy$ = new Subject<void>();
+
+  private readonly shareService = inject(ShareService);
+  private readonly router = inject(Router);
+
+  ngOnInit(): void {
+    this.updateFlagsBasedOnUrl(this.router.url);
+    this.subscribeToUrlChanges();
+    this.subscribeToCurrentData();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   toggleFullscreen(): void {
     this.showInFullscreen = !this.showInFullscreen;
@@ -36,12 +60,38 @@ export class SlideRendererComponent {
     this.setHideTimeout();
   }
 
+  private subscribeToUrlChanges(): void {
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((event) => {
+        this.updateFlagsBasedOnUrl(event.urlAfterRedirects);
+      });
+  }
+
+  private subscribeToCurrentData(): void {
+    this.shareService.currentData$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.currentData = data;
+      });
+  }
+
+  private updateFlagsBasedOnUrl(url: string): void {
+    const bhajanPath = '/bible-bhajan/bhajan';
+    const biblePath = '/bible-bhajan/bible';
+    this.showBhajan = url.endsWith(bhajanPath);
+    this.showBible = url.endsWith(biblePath);
+  }
+
   private setHideTimeout(): void {
     this.hideButtonTimeout = setTimeout(() => {
       if (!this.isMouseInside) {
         this.showButton = false;
       }
-    }, 3000);
+    }, this.HIDE_BUTTON_TIMEOUT_MS);
   }
 
   private clearHideTimeout(): void {

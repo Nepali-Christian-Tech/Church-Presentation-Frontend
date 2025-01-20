@@ -1,15 +1,11 @@
-@import '../../../../../../slideshow-lib/src/styles/colors.scss';
-
 .slide-show-wrapper {
-    position: relative;
-    background-color: white;
 
     &.fullscreen {
         position: absolute;
         width: 100%;
+        max-width: unset !important;
         height: 100vh;
         overflow: auto;
-        margin: 0px !important;
     }
 
     .document-actions {

@@ -1,33 +1,48 @@
-<div class="slide-show-wrapper 
-    h-[calc(100vh-80px)] 
-    my-10 mx-3 lg:m-10 xl:m-12
-    sm:h-[calc(100vh-60px)] 
-    md:h-[calc(100vh-80px)] 
-    lg:h-[calc(100vh-80px)]
-    xl:h-[calc(100vh-100px)]"
-    [class.fullscreen]="showInFullscreen"
-    (mouseenter)="onMouseEnter()" 
-    (mouseleave)="onMouseLeave()">
+<div class="slide-show-wrapper relative min-h-screen mx-auto max-w-[700px] bg-white-smokyWhite"
+    [class.fullscreen]="showInFullscreen" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
 
     <div class="document-actions transition-opacity duration-300 ease-in-out">
-        <ng-container *ngIf="showButton">
-            <ng-container *ngTemplateOutlet="fullscreenControlTemplate"></ng-container>
-        </ng-container>
+        @if (showButton) {
+        <ng-container *ngTemplateOutlet="fullscreenControlTemplate"></ng-container>
+        }
     </div>
 
     <div class="p-3 sm:p-4 md:p-8 lg:p-10 xl:p-12">
-        <p>Show details of selected option</p>
-    </div>   
+        @if (currentData) {
+        <ng-container [ngSwitch]="true">
+            <ng-container *ngSwitchCase="showBhajan">
+                <ng-container *ngTemplateOutlet="bhajanTemplate"></ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="showBible">
+                <ng-container *ngTemplateOutlet="bibleTemplate"></ng-container>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                <p>No specific content available to display.</p>
+            </ng-container>
+        </ng-container>
+        } @else {
+        <ng-container *ngTemplateOutlet="noDataTemplate"></ng-container>
+        }
+    </div>
 </div>
 
-
-
-
-
 <ng-template #fullscreenControlTemplate>
-    <button mat-icon-button [matTooltip]="showInFullscreen ? 'Exit Fullscreen' : 'Fullscreen'" 
+    <button mat-icon-button [matTooltip]="showInFullscreen ? 'Exit Fullscreen' : 'Fullscreen'"
         (click)="toggleFullscreen()">
         <mat-icon *ngIf="!showInFullscreen" class="icon">fullscreen</mat-icon>
         <mat-icon *ngIf="showInFullscreen" class="icon">fullscreen_exit</mat-icon>
     </button>
+</ng-template>
+
+<ng-template #bhajanTemplate>
+    <h3 class="text-center">{{ currentData.title | titlecase }}</h3>
+    <pre class="text-center">{{ currentData.lyrics }}</pre>
+</ng-template>
+
+<ng-template #bibleTemplate>
+    <h3 class="text-center">Bible Content</h3>
+</ng-template>
+
+<ng-template #noDataTemplate>
+    <p class="text-center">No data available. Please select an item to view its content.</p>
 </ng-template>

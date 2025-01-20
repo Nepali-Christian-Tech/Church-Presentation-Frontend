@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        path:'',
+        path: '',
         loadComponent: () => import('./components/index').then(m => m.HomeComponent)
     },
     {
@@ -11,11 +11,11 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'songs',
+                redirectTo: 'bhajan',
                 pathMatch: 'full'
             },
             {
-                path: 'songs',
+                path: 'bhajan',
                 loadComponent: () => import('../app/components/song-and-bible').then(m => m.SongsComponent)
             },
             {

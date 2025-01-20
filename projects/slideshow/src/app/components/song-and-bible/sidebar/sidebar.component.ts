@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MaterialModule ,SearchComponent} from '../../../../../../slideshow-lib/src/public-api';
 import { RouterModule } from '@angular/router';
+import { MaterialModule, SearchComponent } from '../../../../../../slideshow-lib/src/public-api';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,4 +11,7 @@ import { RouterModule } from '@angular/router';
 })
 export class SidebarComponent {
 
+  getSearchText(searchText: string): void {
+    console.log("Search text:", searchText);
+  }
 }
