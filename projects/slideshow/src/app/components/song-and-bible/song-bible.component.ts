@@ -1,12 +1,12 @@
-import { AfterViewInit, Component, Renderer2, ViewChild } from '@angular/core';
-import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
-import { SidebarComponent } from '../sidebar/sidebar.component';
-import { SlideRendererComponent } from '../slide-renderer/slide-renderer.component';
 import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, Renderer2, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { SlideRendererComponent } from './slide-renderer/slide-renderer.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-song-bible',
   standalone: true,
   imports: [
     CommonModule,
@@ -14,10 +14,10 @@ import { MatDrawer } from '@angular/material/sidenav';
     SidebarComponent,
     SlideRendererComponent
   ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  templateUrl: './song-bible.component.html',
+  styleUrl: './song-bible.component.scss'
 })
-export class HomeComponent implements AfterViewInit {
+export class SongBibleComponent implements AfterViewInit {
 
   isFullScreen: boolean = false;
   isSidebarOpen: boolean = false;
@@ -49,5 +49,4 @@ export class HomeComponent implements AfterViewInit {
       this.isSidebarOpen = false;
     }
   }
-
 }

@@ -10,7 +10,7 @@
         </a>
     </nav>
     <div class="pt-3">
-        <app-search (searchTextChanged)="getSearchText($event)"></app-search>
+        <app-search (searchTextChanged)="getSearchText($event)" (searchCleared)="clearSearch($event)"></app-search>
     </div>
 </div>
 

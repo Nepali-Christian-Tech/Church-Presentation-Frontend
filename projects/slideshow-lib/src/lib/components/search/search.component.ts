@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { MaterialModule } from '../../../public-api';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
+import { MaterialModule } from '../../../public-api';
 
 @Component({
   selector: 'app-search',
@@ -17,12 +17,20 @@ export class SearchComponent {
   @Output()
   searchTextChanged: EventEmitter<string> = new EventEmitter();
 
+  @Output()
+  searchCleared: EventEmitter<string> = new EventEmitter();
+
   private subscription: Subscription;
 
   constructor() {
-    this.subscription = this.searchForm.valueChanges.subscribe((value) => {
-      this.searchTextChanged.emit(value);
-    });
+    this.subscription = this.searchForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value) => {
+        this.searchTextChanged.emit(value);
+      });
   }
 
   ngOnDestroy(): void {
@@ -33,5 +41,6 @@ export class SearchComponent {
 
   clearSearch() {
     this.searchForm.reset();
+    this.searchCleared.emit("");
   }
 }

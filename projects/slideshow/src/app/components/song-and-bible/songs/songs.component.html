@@ -1,5 +1,5 @@
 <mat-action-list class="song-list">
-    @for (bhajan of bhajanList; track $index) {
+    @for (bhajan of bhajanList | customSearch: searchText : 'title'; track $index) {
     <mat-list-item (click)="onBhajanSelect(bhajan)" [class.active]="currentBhajan && currentBhajan.id === bhajan.id"
         class="h-12 py-2">
         <span class="text-sm font-normal" [matTooltip]="bhajan.title">

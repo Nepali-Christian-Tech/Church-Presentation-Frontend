@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
-import { ShareService } from '../services';
+import { ShareBibleBhajanService } from '../services';
 
 @Component({
   selector: 'app-slide-renderer',
@@ -30,7 +30,7 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject<void>();
 
-  private readonly shareService = inject(ShareService);
+  private readonly shareBibleBhajan = inject(ShareBibleBhajanService);
   private readonly router = inject(Router);
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToCurrentData(): void {
-    this.shareService.currentData$
+    this.shareBibleBhajan.currentData$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.currentData = data;

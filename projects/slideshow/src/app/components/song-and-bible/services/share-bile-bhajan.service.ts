@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ShareService {
+export class ShareBibleBhajanService {
 
   private currentDataSubject = new BehaviorSubject<any | null>(null);
   currentData$ = this.currentDataSubject.asObservable();

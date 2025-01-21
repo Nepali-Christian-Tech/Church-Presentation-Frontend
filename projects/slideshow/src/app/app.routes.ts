@@ -7,7 +7,7 @@ export const routes: Routes = [
     },
     {
         path: 'bible-bhajan',
-        loadComponent: () => import('../app/components/song-and-bible').then(m => m.HomeComponent),
+        loadComponent: () => import('../app/components/song-and-bible').then(m => m.SongBibleComponent),
         children: [
             {
                 path: '',
