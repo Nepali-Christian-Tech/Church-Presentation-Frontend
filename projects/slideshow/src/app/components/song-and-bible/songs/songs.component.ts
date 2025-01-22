@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { CustomSearchPipe, MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
+import { Store } from '@ngrx/store';
+import { combineLatest, debounceTime, distinctUntilChanged, filter, map, take } from 'rxjs';
+import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
+import * as DataActions from '../../store';
+import * as DataSelectors from '../../store';
+import { SongState } from '../../store/reducers/song.reducer';
 import { Song } from '../models';
-import { ShareBibleBhajanService, ShareSearchTextService, SongBibleService } from '../services';
 
 @Component({
   selector: 'app-songs',
@@ -11,7 +14,6 @@ import { ShareBibleBhajanService, ShareSearchTextService, SongBibleService } fro
   imports: [
     CommonModule,
     MaterialModule,
-    CustomSearchPipe
   ],
   providers: [],
   templateUrl: './songs.component.html',
@@ -19,38 +21,35 @@ import { ShareBibleBhajanService, ShareSearchTextService, SongBibleService } fro
 })
 export class SongsComponent implements OnInit {
 
-  bhajanList: Song[] = [];
-  currentBhajan!: Song;
-  searchText: string = '';
+  private store = inject(Store<SongState>);
 
-  private readonly destroy$ = new Subject<void>();
+  bhajanList$ = this.store.select(DataSelectors.selectSong);
+  loading$ = this.store.select(DataSelectors.selectSongLoading);
+  error$ = this.store.select(DataSelectors.selectSongFailure);
+  searchText$ = this.store.select(DataSelectors.selectSearchText).pipe(
+    distinctUntilChanged(),
+    debounceTime(300)
+  );
+  currentBhajan$ = this.store.select(DataSelectors.selectCurrentSong);
 
-  private songBibleService = inject(SongBibleService);
-  private shareBibleBhajanService = inject(ShareBibleBhajanService);
-  private shareSearchTextService = inject(ShareSearchTextService);
+  filterBhajanList$ = combineLatest([this.bhajanList$, this.searchText$]).pipe(
+    map(([songs, searchText]) =>
+      searchText ? songs.filter(song => song.title.toLowerCase().includes(searchText.toLowerCase())) : songs
+    )
+  );
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.subscribeToCurrentData();
-    this.getSongList();
-  }
-
-  onBhajanSelect(bhajan: Song): void {
-    this.currentBhajan = bhajan;
-    this.shareBibleBhajanService.setCurrentBhajan(this.currentBhajan);
-  }
-
-  private subscribeToCurrentData(): void {
-    this.shareSearchTextService.currentData$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((searchText) => {
-        searchText ? this.searchText = searchText : this.getSongList();
-      });
-  }
-
-  private getSongList(): void {
-    this.songBibleService.getSongs().subscribe((songs: Song[]) => {
-      this.bhajanList = songs?.sort((a, b) => a.id - b.id) || [];
+    this.store.select(DataSelectors.selectSong).pipe(
+      take(1),
+      filter(songs => !songs.length)
+    ).subscribe(() => {
+      this.store.dispatch(DataActions.loadSongs());
     });
   }
 
+  onBhajanSelect(bhajan: Song): void {
+    this.store.dispatch(DataActions.setCurrentSong({ currentSong: bhajan }));
+  }
 }

@@ -8,25 +8,23 @@
     </div>
 
     <div class="p-3 sm:p-4 md:p-8 lg:p-10 xl:p-12">
-        @if (currentData) {
-        <ng-container [ngSwitch]="true">
+        <ng-container *ngIf="currentSong$ | async as currentSong; else noDataTemplate">
+            <ng-container [ngSwitch]="true">
 
-            <ng-container *ngSwitchCase="showBhajan">
-                <ng-container *ngTemplateOutlet="bhajanTemplate"></ng-container>
+                <ng-container *ngSwitchCase="showBhajan">
+                    <ng-container *ngTemplateOutlet="bhajanTemplate context: { $implicit: currentSong }"></ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="showBible">
+                    <ng-container *ngTemplateOutlet="bibleTemplate"></ng-container>
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+                    <p>No specific content available to display.</p>
+                </ng-container>
+
             </ng-container>
-
-            <ng-container *ngSwitchCase="showBible">
-                <ng-container *ngTemplateOutlet="bibleTemplate"></ng-container>
-            </ng-container>
-
-            <ng-container *ngSwitchDefault>
-                <p>No specific content available to display.</p>
-            </ng-container>
-
         </ng-container>
-        } @else {
-        <ng-container *ngTemplateOutlet="noDataTemplate"></ng-container>
-        }
     </div>
 </div>
 
@@ -38,9 +36,9 @@
     </button>
 </ng-template>
 
-<ng-template #bhajanTemplate>
-    <h3 class="text-center font-medium">{{ currentData.title | titlecase }}</h3>
-    <pre class="text-center">{{ currentData.lyrics }}</pre>
+<ng-template #bhajanTemplate let-currentSong>
+    <h3 class="text-center font-medium">{{ currentSong.title | titlecase }}</h3>
+    <pre class="text-center">{{ currentSong.lyrics }}</pre>
 </ng-template>
 
 <ng-template #bibleTemplate>

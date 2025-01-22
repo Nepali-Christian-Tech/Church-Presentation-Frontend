@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
-import { ShareBibleBhajanService } from '../services';
+import { selectCurrentSong } from '../../store';
+import { SongState } from '../../store/reducers/song.reducer';
+import { Song } from '../models';
 
 @Component({
   selector: 'app-slide-renderer',
@@ -19,7 +22,6 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   showButton: boolean = false;
   showBhajan: boolean = false;
   showBible: boolean = false;
-  currentData: any = null;
 
   @Output()
   isFullScreen: EventEmitter<boolean> = new EventEmitter();
@@ -30,13 +32,14 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject<void>();
 
-  private readonly shareBibleBhajan = inject(ShareBibleBhajanService);
   private readonly router = inject(Router);
+  private readonly store = inject(Store<SongState>);
+
+  currentSong$: Observable<Song | null> = this.store.select(selectCurrentSong);
 
   ngOnInit(): void {
     this.updateFlagsBasedOnUrl(this.router.url);
     this.subscribeToUrlChanges();
-    this.subscribeToCurrentData();
   }
 
   ngOnDestroy(): void {
@@ -68,14 +71,6 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
       )
       .subscribe((event) => {
         this.updateFlagsBasedOnUrl(event.urlAfterRedirects);
-      });
-  }
-
-  private subscribeToCurrentData(): void {
-    this.shareBibleBhajan.currentData$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.currentData = data;
       });
   }
 

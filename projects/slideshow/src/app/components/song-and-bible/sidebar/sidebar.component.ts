@@ -1,7 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { MaterialModule, SearchComponent } from '../../../../../../slideshow-lib/src/public-api';
-import { ShareSearchTextService } from '../services';
+import * as DataActions from '../../store';
+import { SongState } from '../../store/reducers/song.reducer';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -12,14 +15,13 @@ import { ShareSearchTextService } from '../services';
 })
 export class SidebarComponent {
 
-  private shareTextService = inject(ShareSearchTextService);
+  private store = inject(Store<SongState>);
 
   getSearchText(searchText: string): void {
-    this.shareTextService.setCurrentText(searchText);
+    this.store.dispatch(DataActions.setSearchText({ text: searchText }));
   }
 
   clearSearch(text: string): void {
-    console.warn("cleared search")
-    this.shareTextService.setCurrentText(" ");
+    this.store.dispatch(DataActions.setSearchText({ text: " " }));
   }
 }
