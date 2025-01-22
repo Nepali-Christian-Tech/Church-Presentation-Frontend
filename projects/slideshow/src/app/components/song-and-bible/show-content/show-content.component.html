@@ -1,0 +1,27 @@
+<div class="reveal p-3 max-w-[700px] mx-auto slide-show-wrapper" [class.fullscreen]="showInFullscreen"
+    (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <div class="document-actions transition-opacity duration-300 ease-in-out">
+        @if (showButton) {
+        <ng-container *ngTemplateOutlet="fullscreenControlTemplate"></ng-container>
+        }
+    </div>
+    <div class="slides">
+        <ng-container *ngTemplateOutlet="slideShowTemplate"></ng-container>
+    </div>
+</div>
+
+<ng-template #fullscreenControlTemplate>
+    <button mat-icon-button [matTooltip]="showInFullscreen ? 'Exit Fullscreen' : 'Fullscreen'"
+        (click)="toggleFullscreen()">
+        <mat-icon *ngIf="!showInFullscreen" class="icon">fullscreen</mat-icon>
+        <mat-icon *ngIf="showInFullscreen" class="icon">fullscreen_exit</mat-icon>
+    </button>
+</ng-template>
+
+<ng-template #slideShowTemplate>
+    @for (bhajan of lyricArray; track $index) {
+    <section data-background-color="rgb(239, 239, 238)" data-transition="slide">
+        <pre>{{bhajan}}</pre>
+    </section>
+    }
+</ng-template>

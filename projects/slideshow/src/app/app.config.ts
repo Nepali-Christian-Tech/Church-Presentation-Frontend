@@ -6,7 +6,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { routes } from './app.routes';
-import { SearchEffect, searchReducer, SongEffect, songReducer } from './components/store';
+import { BibleEffect, bibleReducer, SearchEffect, searchReducer, SongEffect, songReducer } from './components/store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,8 +14,16 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),
-    provideStore({ song: songReducer, search: searchReducer }),
-    provideEffects([SongEffect, SearchEffect]),
+    provideStore({
+      song: songReducer,
+      search: searchReducer,
+      bible: bibleReducer
+    }),
+    provideEffects([
+      SongEffect,
+      SearchEffect,
+      BibleEffect
+    ]),
     provideStoreDevtools({
       maxAge: 3,
       logOnly: !isDevMode(),

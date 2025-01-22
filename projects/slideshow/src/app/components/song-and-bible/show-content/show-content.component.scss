@@ -1,0 +1,39 @@
+.reveal pre {
+    box-shadow: none;
+    text-align: center;
+    font-size: 0.7em;
+    line-height: 1.5em;
+}
+
+.slide-show-wrapper {
+
+    &.fullscreen {
+        position: absolute;
+        width: 100%;
+        max-width: unset !important;
+        height: 100vh;
+        overflow: auto;
+
+        .document-actions {
+            .icon {
+                color: black !important;
+            }
+        }
+
+    }
+
+    .document-actions {
+        position: fixed;
+        right: 1px;
+        top: 3px;
+        border-radius: 50%;
+        height: fit-content;
+        width: 40px;
+        z-index: 9999;
+
+        .icon {
+            color: white !important;
+            z-index: 99;
+        }
+    }
+}

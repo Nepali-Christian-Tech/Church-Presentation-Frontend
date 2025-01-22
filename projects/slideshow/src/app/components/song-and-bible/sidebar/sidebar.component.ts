@@ -5,7 +5,6 @@ import { MaterialModule, SearchComponent } from '../../../../../../slideshow-lib
 import * as DataActions from '../../store';
 import { SongState } from '../../store/reducers/song.reducer';
 
-
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -21,7 +20,4 @@ export class SidebarComponent {
     this.store.dispatch(DataActions.setSearchText({ text: searchText }));
   }
 
-  clearSearch(text: string): void {
-    this.store.dispatch(DataActions.setSearchText({ text: " " }));
-  }
 }

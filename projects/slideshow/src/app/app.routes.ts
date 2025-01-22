@@ -21,8 +21,12 @@ export const routes: Routes = [
             {
                 path: 'bible',
                 loadComponent: () => import('../app/components/song-and-bible').then(m => m.BibleComponent)
-            }
+            },
         ]
+    },
+    {
+        path: 'bhajan-slide-show',
+        loadComponent: () => import('./components/song-and-bible').then(m => m.ShowContentComponent)
     },
     {
         path: 'presentation',

@@ -17,9 +17,6 @@ export class SearchComponent {
   @Output()
   searchTextChanged: EventEmitter<string> = new EventEmitter();
 
-  @Output()
-  searchCleared: EventEmitter<string> = new EventEmitter();
-
   private subscription: Subscription;
 
   constructor() {
@@ -41,6 +38,5 @@ export class SearchComponent {
 
   clearSearch() {
     this.searchForm.reset();
-    this.searchCleared.emit("");
   }
 }

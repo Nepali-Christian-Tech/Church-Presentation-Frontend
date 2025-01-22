@@ -11,3 +11,12 @@ export interface Bible {
     version: number;
     isTitle: number;
 }
+
+export interface BibleInfo {
+    bookId: number;
+    testament: string;
+    bookNepali: string;
+    bookEnglish: string;
+    bookShort: string;
+    chapter: number;
+}

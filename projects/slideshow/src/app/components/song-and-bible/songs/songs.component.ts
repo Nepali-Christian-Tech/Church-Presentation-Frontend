@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, debounceTime, distinctUntilChanged, filter, map, take } from 'rxjs';
+import { combineLatest, filter, map, take } from 'rxjs';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 import * as DataActions from '../../store';
 import * as DataSelectors from '../../store';
@@ -26,10 +26,8 @@ export class SongsComponent implements OnInit {
   bhajanList$ = this.store.select(DataSelectors.selectSong);
   loading$ = this.store.select(DataSelectors.selectSongLoading);
   error$ = this.store.select(DataSelectors.selectSongFailure);
-  searchText$ = this.store.select(DataSelectors.selectSearchText).pipe(
-    distinctUntilChanged(),
-    debounceTime(300)
-  );
+
+  searchText$ = this.store.select(DataSelectors.selectSearchText);
   currentBhajan$ = this.store.select(DataSelectors.selectCurrentSong);
 
   filterBhajanList$ = combineLatest([this.bhajanList$, this.searchText$]).pipe(
@@ -37,8 +35,6 @@ export class SongsComponent implements OnInit {
       searchText ? songs.filter(song => song.title.toLowerCase().includes(searchText.toLowerCase())) : songs
     )
   );
-
-  constructor() { }
 
   ngOnInit(): void {
     this.store.select(DataSelectors.selectSong).pipe(
