@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Song } from "../../song-and-bible/models";
+import { Song } from "../../../song-and-bible/models";
 
 export const loadSongs = createAction('[Songs] Load Songs')
 
@@ -13,7 +13,11 @@ export const loadSongsFailure = createAction(
     props<{ error: any }>()
 )
 
+export const clearSongs = createAction(
+    '[Songs] Clear Songs'
+)
+
 export const setCurrentSong = createAction(
     '[Song] Set Current Song',
-    props<{ currentSong: Song }>()
+    props<{ currentSong: Song | null }>()
 )

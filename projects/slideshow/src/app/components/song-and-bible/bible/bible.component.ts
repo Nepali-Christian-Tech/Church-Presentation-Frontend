@@ -3,9 +3,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
-import * as DataActions from '../../store';
-import * as DataSelectors from '../../store';
-import { BibleState } from '../../store/reducers/bible.reducer';
+import * as DataActions from '../../store/bible';
+import * as DataSelectors from '../../store/bible';
+import { BibleState } from '../../store/bible/reducers/bible.reducer';
 import { BibleInfo } from '../models';
 
 @Component({
@@ -19,14 +19,11 @@ export class BibleComponent implements OnInit {
 
   private store = inject(Store<BibleState>)
 
-  bibleInfo$ = this.store.select(DataSelectors.selectBibleInfo);
-  loading$ = this.store.select(DataSelectors.selectBibleLoading);
-  error$ = this.store.select(DataSelectors.selectBibleFailure);
+  bibleInfo$ = this.store.select(DataSelectors.selectAllBibleInfo);
 
   currentBook$ = this.store.select(DataSelectors.selectCurrentBook);
 
   ngOnInit(): void {
-    console.log('BibleComponent initialized');
     this.bibleInfo$.pipe(
       take(1),
       filter(bible => !bible.length)

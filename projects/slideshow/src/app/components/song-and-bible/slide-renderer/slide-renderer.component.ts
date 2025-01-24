@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
-import { selectCurrentSong } from '../../store';
-import { SongState } from '../../store/reducers/song.reducer';
+import { selectCurrentSong } from '../../store/song';
+import { SongState } from '../../store/song/reducers/song.reducer';
 import { Song } from '../models';
 
 @Component({

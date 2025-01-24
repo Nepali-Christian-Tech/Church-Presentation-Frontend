@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { BibleInfo } from "../../song-and-bible/models";
+import { BibleInfo } from "../../../song-and-bible/models";
 
 export const loadBibleInfo = createAction(
     '[Bible] Load Bible Info',
@@ -13,6 +13,10 @@ export const loadBibleInfoSuccess = createAction(
 export const loadBibleInfoFailure = createAction(
     '[Bible] Load Bible Failure',
     props<{ error: any }>()
+)
+
+export const clearBible = createAction(
+    '[Bible] Clear Bible'
 )
 
 export const setCurrentBibleBook = createAction(

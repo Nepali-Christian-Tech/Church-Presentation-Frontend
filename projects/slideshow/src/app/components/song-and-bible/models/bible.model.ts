@@ -13,6 +13,7 @@ export interface Bible {
 }
 
 export interface BibleInfo {
+    id: number;
     bookId: number;
     testament: string;
     bookNepali: string;

@@ -2,8 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MaterialModule, SearchComponent } from '../../../../../../slideshow-lib/src/public-api';
-import * as DataActions from '../../store';
-import { SongState } from '../../store/reducers/song.reducer';
+import * as DataActions from '../../store/search';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +13,7 @@ import { SongState } from '../../store/reducers/song.reducer';
 })
 export class SidebarComponent {
 
-  private store = inject(Store<SongState>);
+  private store = inject(Store<string>);
 
   getSearchText(searchText: string): void {
     this.store.dispatch(DataActions.setSearchText({ text: searchText }));

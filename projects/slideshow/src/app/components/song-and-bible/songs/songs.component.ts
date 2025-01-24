@@ -3,9 +3,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, filter, map, take } from 'rxjs';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
-import * as DataActions from '../../store';
-import * as DataSelectors from '../../store';
-import { SongState } from '../../store/reducers/song.reducer';
+import * as SongDataSelectors from '../../store/search';
+import * as DataActions from '../../store/song';
+import * as DataSelectors from '../../store/song';
+import { SongState } from '../../store/song/reducers/song.reducer';
 import { Song } from '../models';
 
 @Component({
@@ -23,11 +24,8 @@ export class SongsComponent implements OnInit {
 
   private store = inject(Store<SongState>);
 
-  bhajanList$ = this.store.select(DataSelectors.selectSong);
-  loading$ = this.store.select(DataSelectors.selectSongLoading);
-  error$ = this.store.select(DataSelectors.selectSongFailure);
-
-  searchText$ = this.store.select(DataSelectors.selectSearchText);
+  bhajanList$ = this.store.select(DataSelectors.selectAllSongList);
+  searchText$ = this.store.select(SongDataSelectors.selectSearchText);
   currentBhajan$ = this.store.select(DataSelectors.selectCurrentSong);
 
   filterBhajanList$ = combineLatest([this.bhajanList$, this.searchText$]).pipe(
@@ -37,7 +35,7 @@ export class SongsComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    this.store.select(DataSelectors.selectSong).pipe(
+    this.store.select(DataSelectors.selectAllSongList).pipe(
       take(1),
       filter(songs => !songs.length)
     ).subscribe(() => {
