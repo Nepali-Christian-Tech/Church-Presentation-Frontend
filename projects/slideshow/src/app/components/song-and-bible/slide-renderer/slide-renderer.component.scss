@@ -47,3 +47,37 @@
         }
     }
 }
+
+.bible-container {
+    display: flex;
+    flex-direction: column;
+    /* Ensures rows stack vertically */
+    gap: 10px;
+    /* Space between rows */
+    margin: 20px;
+}
+
+.bible-row {
+    display: block;
+    /* Ensure rows take the full width */
+}
+
+.chapter-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.verse-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    /* Space between the verse number and text */
+    font-size: 1em;
+}
+
+.verse-number {
+    font-weight: bold;
+    color: #666;
+}

@@ -35,11 +35,31 @@
     <h4 class="text-center font-medium">
         {{ currentBook?.bookNepali }} - ({{ currentBook?.bookEnglish | titlecase }})
     </h4>
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(60px,1fr))] gap-4 mt-8 sm:mt-10 md:mt-12 lg:mt-16 xl:mt-20">
-        <button *ngFor="let _ of [].constructor(currentBook.chapter); let i = index"
-            class="bg-primary-500 text-white font-medium py-2 px-4 rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-opacity-50 text-sm">
+
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(47px,auto))] gap-1 mt-8 sm:mt-10 md:mt-10 lg:mt-10 xl:mt-15">
+        <button (click)="getBibleChapter(currentBook, i+1)"
+            *ngFor="let _ of [].constructor(currentBook.chapter-1); let i = index"
+            class="bg-primary-500 text-white font-normal p-2 rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-opacity-50 text-sm w-12">
             {{ i + 1 }}
         </button>
+    </div>
+
+    @if (bibleChapterWithVerse.length>0) {
+    <ng-container *ngTemplateOutlet="showBibleChapterWithVerse;"></ng-container>
+    }
+</ng-template>
+
+<ng-template #showBibleChapterWithVerse>
+    <div class="space-y-4 p-4 mt-3">
+        @for (data of bibleChapterWithVerse; track $index) {
+        <div *ngIf="data.isTitle" class="text-xl font-bold text-center">
+            <h3 [innerHTML]="data.scripture"></h3>
+        </div>
+        <div *ngIf="!data.isTitle" class="flex items-start space-x-2">
+            <strong class="font-semibold text-gray-500 text-sm">{{ data.verse }}.</strong>
+            <span [innerHTML]="data.scripture" class="text-gray-800 leading-loose"></span>
+        </div>
+        }
     </div>
 </ng-template>
 

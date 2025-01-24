@@ -21,3 +21,9 @@ export interface BibleInfo {
     bookShort: string;
     chapter: number;
 }
+
+
+export interface BibleVerse {
+    verseNumber: number;
+    verseText: string;
+}

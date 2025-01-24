@@ -8,7 +8,8 @@ import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 import { selectCurrentBook } from '../../store/bible';
 import { selectCurrentSong } from '../../store/song';
 import { SongState } from '../../store/song/reducers/song.reducer';
-import { BibleInfo, Song } from '../models';
+import { Bible, BibleInfo, Song } from '../models';
+import { SongBibleService } from '../services';
 
 @Component({
   selector: 'app-slide-renderer',
@@ -24,6 +25,8 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   showBhajan: boolean = false;
   showBible: boolean = false;
 
+  bibleChapterWithVerse: Bible[] = [];
+
   @Output()
   isFullScreen: EventEmitter<boolean> = new EventEmitter();
 
@@ -35,6 +38,7 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
 
   private readonly router = inject(Router);
   private readonly store = inject(Store<SongState>);
+  private songBibleService = inject(SongBibleService);
 
   currentSong$: Observable<Song | null> = this.store.select(selectCurrentSong);
   currentBook$: Observable<BibleInfo | null> = this.store.select(selectCurrentBook);
@@ -63,6 +67,16 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   onMouseLeave(): void {
     this.isMouseInside = false;
     this.setHideTimeout();
+  }
+
+  getBibleChapter(selectedBibleBook: BibleInfo, chapter: number): void {
+    const bookId = selectedBibleBook.bookId;
+    this.songBibleService.getBibleChapter(bookId, chapter).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((data) => {
+      console.log("Data is ", data);
+      this.bibleChapterWithVerse = data ? data : [];
+    })
   }
 
   private subscribeToUrlChanges(): void {
