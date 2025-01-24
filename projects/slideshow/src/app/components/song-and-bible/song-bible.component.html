@@ -9,7 +9,7 @@
     <mat-drawer-content class="slide-show-container">
         @if (!isFullScreen) {
         <button mat-icon-button (click)="toggleSidebar($event)" class="menu">
-            <mat-icon class="white-smokyWhite">menu</mat-icon>
+            <mat-icon style="color: black;">menu</mat-icon>
         </button>
         }
         <app-slide-renderer (isFullScreen)="whenFullScreen($event)"></app-slide-renderer>

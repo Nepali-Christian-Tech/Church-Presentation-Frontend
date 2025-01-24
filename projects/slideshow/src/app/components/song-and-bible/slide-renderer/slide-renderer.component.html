@@ -8,23 +8,13 @@
     </div>
 
     <div class="p-3 sm:p-4 md:p-8 lg:p-10 xl:p-12">
-        <ng-container *ngIf="currentSong$ | async as currentSong; else noDataTemplate">
-            <ng-container [ngSwitch]="true">
-
-                <ng-container *ngSwitchCase="showBhajan">
-                    <ng-container *ngTemplateOutlet="bhajanTemplate context: { $implicit: currentSong }"></ng-container>
-                </ng-container>
-
-                <ng-container *ngSwitchCase="showBible">
-                    <ng-container *ngTemplateOutlet="bibleTemplate"></ng-container>
-                </ng-container>
-
-                <ng-container *ngSwitchDefault>
-                    <p>No specific content available to display.</p>
-                </ng-container>
-
-            </ng-container>
-        </ng-container>
+        @if ((currentSong$ | async) && showBhajan) {
+        <ng-container *ngTemplateOutlet="bhajanTemplate; context: { $implicit: (currentSong$ | async) }"></ng-container>
+        } @else if ((currentBook$ | async) && showBible) {
+        <ng-container *ngTemplateOutlet="bibleTemplate; context: { $implicit: (currentBook$ | async) }"></ng-container>
+        } @else {
+        <ng-container *ngTemplateOutlet="noDataTemplate"></ng-container>
+        }
     </div>
 </div>
 
@@ -37,12 +27,20 @@
 </ng-template>
 
 <ng-template #bhajanTemplate let-currentSong>
-    <h3 class="text-center font-medium">{{ currentSong.title | titlecase }}</h3>
+    <h4 class="text-center font-medium">{{ currentSong.title | titlecase }}</h4>
     <pre class="text-center">{{ currentSong.lyrics }}</pre>
 </ng-template>
 
-<ng-template #bibleTemplate>
-    <h3 class="text-center">Bible content is under development.</h3>
+<ng-template #bibleTemplate let-currentBook>
+    <h4 class="text-center font-medium">
+        {{ currentBook?.bookNepali }} - ({{ currentBook?.bookEnglish | titlecase }})
+    </h4>
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(60px,1fr))] gap-4 mt-8 sm:mt-10 md:mt-12 lg:mt-16 xl:mt-20">
+        <button *ngFor="let _ of [].constructor(currentBook.chapter); let i = index"
+            class="bg-primary-500 text-white font-medium py-2 px-4 rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-opacity-50 text-sm">
+            {{ i + 1 }}
+        </button>
+    </div>
 </ng-template>
 
 <ng-template #noDataTemplate>

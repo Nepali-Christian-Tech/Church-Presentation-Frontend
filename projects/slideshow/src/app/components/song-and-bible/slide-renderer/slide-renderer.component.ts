@@ -5,9 +5,10 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
+import { selectCurrentBook } from '../../store/bible';
 import { selectCurrentSong } from '../../store/song';
 import { SongState } from '../../store/song/reducers/song.reducer';
-import { Song } from '../models';
+import { BibleInfo, Song } from '../models';
 
 @Component({
   selector: 'app-slide-renderer',
@@ -36,6 +37,7 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   private readonly store = inject(Store<SongState>);
 
   currentSong$: Observable<Song | null> = this.store.select(selectCurrentSong);
+  currentBook$: Observable<BibleInfo | null> = this.store.select(selectCurrentBook);
 
   ngOnInit(): void {
     this.updateFlagsBasedOnUrl(this.router.url);

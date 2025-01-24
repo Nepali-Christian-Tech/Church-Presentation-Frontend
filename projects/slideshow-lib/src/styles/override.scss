@@ -59,3 +59,10 @@ mat-form-field {
         }
     }
 }
+
+// bible bhajan sidebar 
+.mat-drawer {
+    border-top-right-radius: unset !important;
+    border-bottom-right-radius: unset !important;
+    max-width: 343px;
+}
