@@ -26,6 +26,8 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   showBible: boolean = false;
 
   bibleChapterWithVerse: Bible[] = [];
+  selectedBibleChapter: number | null = null;
+  boookId: number | null = null;
 
   @Output()
   isFullScreen: EventEmitter<boolean> = new EventEmitter();
@@ -53,6 +55,14 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  getChapterList(currentBook: BibleInfo): number[] {
+    return Array.from({ length: currentBook.chapter - 1 }, (_, i) => i + 1);
+  }
+
+  isBibleChapterActive(bookId: number, chapter: number): boolean {
+    return this.boookId === bookId && this.selectedBibleChapter === chapter;
+  }
+
   toggleFullscreen(): void {
     this.showInFullscreen = !this.showInFullscreen;
     this.isFullScreen.emit(this.showInFullscreen);
@@ -70,11 +80,11 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   }
 
   getBibleChapter(selectedBibleBook: BibleInfo, chapter: number): void {
-    const bookId = selectedBibleBook.bookId;
-    this.songBibleService.getBibleChapter(bookId, chapter).pipe(
+    this.selectedBibleChapter = chapter;
+    this.boookId = selectedBibleBook.bookId;
+    this.songBibleService.getBibleChapter(this.boookId, chapter).pipe(
       takeUntil(this.destroy$)
     ).subscribe((data) => {
-      console.log("Data is ", data);
       this.bibleChapterWithVerse = data ? data : [];
     })
   }
