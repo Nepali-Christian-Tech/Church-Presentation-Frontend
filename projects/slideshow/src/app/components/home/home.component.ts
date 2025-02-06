@@ -1,11 +1,10 @@
-import { AfterViewInit, Component, Renderer2, ViewChild } from '@angular/core';
-import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
 import { CommonModule } from '@angular/common';
-import { MatDrawer } from '@angular/material/sidenav';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
 
 @Component({
-  selector: 'app-home',
+  selector: 'slideshow-home',
   standalone: true,
   imports: [
     CommonModule,

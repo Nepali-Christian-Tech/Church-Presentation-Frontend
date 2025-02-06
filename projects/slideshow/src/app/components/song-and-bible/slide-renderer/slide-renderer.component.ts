@@ -12,7 +12,7 @@ import { Bible, BibleInfo, Song } from '../models';
 import { SongBibleService } from '../services';
 
 @Component({
-  selector: 'app-slide-renderer',
+  selector: 'slideshow-slide-renderer',
   standalone: true,
   imports: [MaterialModule, CommonModule],
   templateUrl: './slide-renderer.component.html',

@@ -20,7 +20,7 @@ import { NotificationService } from './services';
   template: `
   <lib-spinner [loaderStatus$]= '$loaderStatus' />
   <router-outlet />
-  <app-notification 
+  <slideshow-notification 
       [showNotification]="showNotification" 
       [message]="message" 
       [isError]="isError"

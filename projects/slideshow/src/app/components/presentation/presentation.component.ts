@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
 
+import { CommonModule } from '@angular/common';
 import Reveal from 'reveal.js';
 import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
-import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-presentation',
+  selector: 'slideshow-presentation',
   standalone: true,
   imports: [MaterialModule, CommonModule],
   templateUrl: './presentation.component.html',

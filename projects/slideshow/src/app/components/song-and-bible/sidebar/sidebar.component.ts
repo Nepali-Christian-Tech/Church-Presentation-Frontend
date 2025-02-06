@@ -5,7 +5,7 @@ import { MaterialModule, SearchComponent } from '../../../../../../slideshow-lib
 import * as DataActions from '../../store/search';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'slideshow-sidebar',
   standalone: true,
   imports: [MaterialModule, SearchComponent, RouterModule],
   templateUrl: './sidebar.component.html',

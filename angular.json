@@ -215,7 +215,7 @@
       },
       "root": "projects/slideshow-admin",
       "sourceRoot": "projects/slideshow-admin/src",
-      "prefix": "app",
+      "prefix": "slideshow",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",

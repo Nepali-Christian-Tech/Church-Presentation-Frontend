@@ -5,7 +5,7 @@ import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 
 @Component({
-  selector: 'app-show-content',
+  selector: 'slideshow-show-content',
   standalone: true,
   imports: [
     MaterialModule, CommonModule

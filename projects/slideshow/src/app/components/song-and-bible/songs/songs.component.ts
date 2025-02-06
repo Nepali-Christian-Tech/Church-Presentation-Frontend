@@ -10,7 +10,7 @@ import { SongState } from '../../store/song/reducers/song.reducer';
 import { Song } from '../models';
 
 @Component({
-  selector: 'app-songs',
+  selector: 'slideshow-songs',
   standalone: true,
   imports: [
     CommonModule,

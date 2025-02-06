@@ -9,7 +9,7 @@ import { BibleState } from '../../store/bible/reducers/bible.reducer';
 import { BibleInfo } from '../models';
 
 @Component({
-  selector: 'app-bible',
+  selector: 'slideshow-bible',
   standalone: true,
   imports: [MaterialModule, CommonModule],
   templateUrl: './bible.component.html',
