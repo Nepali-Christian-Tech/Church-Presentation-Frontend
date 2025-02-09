@@ -1,12 +1,13 @@
 <div class="sticky top-0 z-10 p-3 bg-white-smokyWhite border-b border-coffee-300 xs">
-    <nav mat-tab-nav-bar mat-align-tabs='center'>
-        <a mat-tab-link [routerLink]='"dahboard"' #templateLink='routerLinkActive' routerLinkActive
-            [active]='templateLink.isActive' replaceUrl='true'>
+    <nav mat-tab-nav-bar mat-align-tabs="center" [tabPanel]="tabPanel">
+        <a mat-tab-link [routerLink]='"dahboard"' #dashboardLink='routerLinkActive' routerLinkActive
+            [active]='dashboardLink.isActive' replaceUrl='true'>
             <span class="text-primary-950">Dashboard</span>
         </a>
-        <a mat-tab-link [routerLink]='"slides"' #templateLink='routerLinkActive' routerLinkActive
-            [active]='templateLink.isActive' replaceUrl='true'>
+        <a mat-tab-link [routerLink]="'slides'" #slidesLink="routerLinkActive" routerLinkActive
+            [active]="slidesLink.isActive" replaceUrl="true">
             <span class="text-primary-950">Slides</span>
         </a>
     </nav>
+    <div mat-tab-nav-panel #tabPanel></div>
 </div>

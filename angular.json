@@ -235,7 +235,8 @@
               }
             ],
             "styles": [
-              "projects/slideshow-admin/src/styles.scss"
+              "projects/slideshow-admin/src/styles.scss",
+              "projects/slideshow-lib/src/styles/_index.scss"
             ],
             "scripts": []
           },
