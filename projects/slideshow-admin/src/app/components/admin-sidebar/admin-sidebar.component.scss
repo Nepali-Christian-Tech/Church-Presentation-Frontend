@@ -1,0 +1,26 @@
+@import '../../../../../slideshow-lib/src/styles/colors.scss';
+
+::ng-deep mat-action-list {
+    padding: 0px !important;
+}
+
+mat-action-list {
+    height: 57px;
+}
+
+::ng-deep span.mat-mdc-list-item-unscoped-content {
+    display: flex;
+    align-items: center;
+}
+
+mat-action-list {
+    .active-list-item {
+        border-bottom: 1px solid $border !important;
+        // border-left: 6px solid $primary-medium !important;
+        background-color: $primary-light !important;
+
+        span {
+            font-weight: 500 !important;
+        }
+    }
+}

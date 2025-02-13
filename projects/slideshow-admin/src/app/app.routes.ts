@@ -6,7 +6,7 @@ export const routes: Routes = [
         loadComponent: () => import('./components/index').then(m => m.AdminHomeComponent),
         children: [
             {
-                path: 'dahboard',
+                path: 'dashboard',
                 loadComponent: () => import('./components/index').then(m => m.AdminDashboardComponent)
             },
             {

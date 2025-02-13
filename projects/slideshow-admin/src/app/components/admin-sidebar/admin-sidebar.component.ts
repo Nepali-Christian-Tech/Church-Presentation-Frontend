@@ -6,7 +6,8 @@ import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
   selector: 'slideshow-admin-sidebar',
   standalone: true,
   imports: [
-    MaterialModule, RouterModule
+    MaterialModule,
+    RouterModule
   ],
   templateUrl: './admin-sidebar.component.html',
   styleUrl: './admin-sidebar.component.scss'

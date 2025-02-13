@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
 import { AdminHeaderComponent } from '../admin-header/admin-header.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 
@@ -7,17 +9,19 @@ import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component'
   selector: 'slideshow-admin-home',
   standalone: true,
   imports: [
+    CommonModule,
+    MaterialModule,
+    RouterModule,
     AdminHeaderComponent,
     AdminSidebarComponent,
-    RouterModule
   ],
-  template: `<slideshow-admin-header></slideshow-admin-header>
-  <slideshow-admin-sidebar></slideshow-admin-sidebar>
-  
-  <div class="overflow-y-auto">
-      <router-outlet></router-outlet>
-  </div>`,
+  templateUrl: './admin-home.component.html',
+  styles: `mat-drawer{max-width: 300px;}`
 })
 export class AdminHomeComponent {
+  isSidebarOpen: boolean = false;
 
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 }
