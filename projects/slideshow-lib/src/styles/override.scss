@@ -66,3 +66,19 @@ mat-form-field {
     border-bottom-right-radius: unset !important;
     max-width: 343px;
 }
+
+
+.mat-mdc-list-item:hover {
+    background: transparent !important;
+}
+
+.mat-mdc-list-item:focus,
+.mat-mdc-list-item::before,
+.mat-mdc-list-item::after {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.mat-ripple-element {
+    display: none !important;
+}

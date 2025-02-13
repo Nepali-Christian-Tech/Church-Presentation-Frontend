@@ -12,7 +12,11 @@ export const routes: Routes = [
             {
                 path: 'slides',
                 loadComponent: () => import('./components/index').then(m => m.SlidesComponent)
-            }
+            },
+            {
+                path: 'create-slide',
+                loadComponent: () => import('./components/index').then(m => m.CreateSlideComponent)
+            },
         ]
     },
 ];
