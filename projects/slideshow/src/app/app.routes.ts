@@ -32,5 +32,9 @@ export const routes: Routes = [
         path: 'presentation',
         loadComponent: () => import('./components/index').then(m => m.PresentationComponent)
     },
+    {
+        path: 'control-slide-show',
+        loadComponent: () => import('./components/').then(m => m.ControlSlideShowComponent)
+    },
     { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

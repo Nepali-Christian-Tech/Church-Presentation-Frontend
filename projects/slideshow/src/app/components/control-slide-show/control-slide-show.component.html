@@ -1,0 +1,11 @@
+<div class="p-3">
+    @if (lyricArray.length>0) {
+    <ng-container *ngTemplateOutlet="showVerseListTemplate"></ng-container>
+    }
+</div>
+
+<ng-template #showVerseListTemplate>
+    @for (item of lyricArray; track $index) {
+    <a>verse : <b>{{$index + 1}}</b></a><br>
+    }
+</ng-template>
