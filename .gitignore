@@ -38,3 +38,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Ignore wesocket node_modules
+websocket/node_modules
