@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, filter, map, take } from 'rxjs';
+import { io } from "socket.io-client";
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
+import { environment } from '../../../../environments/environment';
 import * as SongDataSelectors from '../../store/search';
 import * as DataActions from '../../store/song';
 import * as DataSelectors from '../../store/song';
@@ -23,6 +25,7 @@ import { Song } from '../models';
 export class SongsComponent implements OnInit {
 
   private store = inject(Store<SongState>);
+  private socket = io(environment.websocketWebURL);
 
   bhajanList$ = this.store.select(DataSelectors.selectAllSongList);
   searchText$ = this.store.select(SongDataSelectors.selectSearchText);
@@ -45,5 +48,6 @@ export class SongsComponent implements OnInit {
 
   onBhajanSelect(bhajan: Song): void {
     this.store.dispatch(DataActions.setCurrentSong({ currentSong: bhajan }));
+    this.socket.emit("slideChange", bhajan);
   }
 }

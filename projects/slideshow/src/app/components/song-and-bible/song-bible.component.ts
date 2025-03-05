@@ -5,6 +5,7 @@ import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SlideRendererComponent } from './slide-renderer/slide-renderer.component';
 
+
 @Component({
   selector: 'app-song-bible',
   standalone: true,

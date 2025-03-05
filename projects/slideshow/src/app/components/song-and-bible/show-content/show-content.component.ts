@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import Reveal from 'reveal.js';
 import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
+import { io } from "socket.io-client";
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
+import { environment } from '../../../../environments/environment';
+import { Song } from '../models';
 
 @Component({
   selector: 'slideshow-show-content',
@@ -23,11 +26,15 @@ export class ShowContentComponent {
   showButton: boolean = false;
   showBhajan: boolean = false;
 
+  currentSlide: Song | null = null;
+
   private resizeObserver: ResizeObserver | null = null;
 
   private readonly HIDE_BUTTON_TIMEOUT_MS = 3000;
   private hideButtonTimeout: any;
   private isMouseInside: boolean = false;
+
+  private socket = io(environment.websocketWebURL);
 
   constructor() {
     this.lyricArray = this.lyrics.split(/\n\n\n+/).map(section => section.trim());
@@ -50,6 +57,13 @@ export class ShowContentComponent {
   onMouseLeave(): void {
     this.isMouseInside = false;
     this.setHideTimeout();
+  }
+
+  private getDataFromWebSocket(): void {
+    this.socket.on("updateSlide", (data) => {
+      console.warn("Slide updated:", data);
+      this.currentSlide = data;
+    });
   }
 
   private initializeRevealJS(): void {
