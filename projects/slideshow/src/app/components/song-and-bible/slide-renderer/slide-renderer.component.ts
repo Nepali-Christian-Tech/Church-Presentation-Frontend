@@ -4,12 +4,19 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { io } from "socket.io-client";
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
+import { environment } from '../../../../environments/environment';
 import { selectCurrentBook } from '../../store/bible';
 import { selectCurrentSong } from '../../store/song';
 import { SongState } from '../../store/song/reducers/song.reducer';
 import { Bible, BibleInfo, Song } from '../models';
 import { SongBibleService } from '../services';
+
+export const UrlPath = {
+  BHAJAN: '/bible-bhajan/bhajan',
+  BIBLE: '/bible-bhajan/bible'
+}
 
 @Component({
   selector: 'slideshow-slide-renderer',
@@ -20,8 +27,6 @@ import { SongBibleService } from '../services';
 })
 export class SlideRendererComponent implements OnInit, OnDestroy {
 
-  showInFullscreen: boolean = false;
-  showButton: boolean = false;
   showBhajan: boolean = false;
   showBible: boolean = false;
 
@@ -32,15 +37,12 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   @Output()
   isFullScreen: EventEmitter<boolean> = new EventEmitter();
 
-  private readonly HIDE_BUTTON_TIMEOUT_MS = 3000;
-  private hideButtonTimeout: any;
-  private isMouseInside: boolean = false;
-
   private readonly destroy$ = new Subject<void>();
 
   private readonly router = inject(Router);
   private readonly store = inject(Store<SongState>);
   private songBibleService = inject(SongBibleService);
+  private socket = io(environment.websocketWebURL);
 
   currentSong$: Observable<Song | null> = this.store.select(selectCurrentSong);
   currentBook$: Observable<BibleInfo | null> = this.store.select(selectCurrentBook);
@@ -63,22 +65,6 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
     return this.boookId === bookId && this.selectedBibleChapter === chapter;
   }
 
-  toggleFullscreen(): void {
-    this.showInFullscreen = !this.showInFullscreen;
-    this.isFullScreen.emit(this.showInFullscreen);
-  }
-
-  onMouseEnter(): void {
-    this.isMouseInside = true;
-    this.showButton = true;
-    this.clearHideTimeout();
-  }
-
-  onMouseLeave(): void {
-    this.isMouseInside = false;
-    this.setHideTimeout();
-  }
-
   getBibleChapter(selectedBibleBook: BibleInfo, chapter: number): void {
     this.selectedBibleChapter = chapter;
     this.boookId = selectedBibleBook.bookId;
@@ -88,6 +74,8 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
       this.bibleChapterWithVerse = data ? data : [];
     })
   }
+
+  // this.socket.emit("slideChange", bhajan);
 
   private subscribeToUrlChanges(): void {
     this.router.events
@@ -101,23 +89,7 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   }
 
   private updateFlagsBasedOnUrl(url: string): void {
-    const bhajanPath = '/bible-bhajan/bhajan';
-    const biblePath = '/bible-bhajan/bible';
-    this.showBhajan = url.endsWith(bhajanPath);
-    this.showBible = url.endsWith(biblePath);
-  }
-
-  private setHideTimeout(): void {
-    this.hideButtonTimeout = setTimeout(() => {
-      if (!this.isMouseInside) {
-        this.showButton = false;
-      }
-    }, this.HIDE_BUTTON_TIMEOUT_MS);
-  }
-
-  private clearHideTimeout(): void {
-    if (this.hideButtonTimeout) {
-      clearTimeout(this.hideButtonTimeout);
-    }
+    this.showBhajan = url.endsWith(UrlPath.BHAJAN);
+    this.showBible = url.endsWith(UrlPath.BIBLE);
   }
 }

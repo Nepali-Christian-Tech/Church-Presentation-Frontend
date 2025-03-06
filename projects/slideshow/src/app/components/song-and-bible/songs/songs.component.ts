@@ -48,6 +48,6 @@ export class SongsComponent implements OnInit {
 
   onBhajanSelect(bhajan: Song): void {
     this.store.dispatch(DataActions.setCurrentSong({ currentSong: bhajan }));
-    this.socket.emit("slideChange", bhajan);
+    this.socket.emit('slideChange', bhajan);
   }
 }

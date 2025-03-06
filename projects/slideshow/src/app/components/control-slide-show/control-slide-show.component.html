@@ -1,11 +1,68 @@
-<div class="p-3">
-    @if (lyricArray.length>0) {
-    <ng-container *ngTemplateOutlet="showVerseListTemplate"></ng-container>
-    }
+<div class="slide-show-wrapper relative min-h-screen mx-auto max-w-[700px] bg-white-smokyWhite"
+    [class.fullscreen]="showInFullscreen" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <div class="document-actions transition-opacity duration-300 ease-in-out">
+        @if (showButton) {
+        <ng-container *ngTemplateOutlet="fullscreenControlTemplate"></ng-container>
+        }
+    </div>
+    <div class="p-3 sm:p-4 md:p-8 lg:p-10 xl:p-12">
+        @if ((currentSong$ | async) && showBhajan) {
+        <ng-container *ngTemplateOutlet="bhajanTemplate; context: { $implicit: (currentSong$ | async) }"></ng-container>
+        } @else if ((currentBook$ | async) && showBible) {
+        <ng-container *ngTemplateOutlet="bibleTemplate; context: { $implicit: (currentBook$ | async) }"></ng-container>
+        } @else {
+        <ng-container *ngTemplateOutlet="noDataTemplate"></ng-container>
+        }
+    </div>
 </div>
 
-<ng-template #showVerseListTemplate>
-    @for (item of lyricArray; track $index) {
-    <a>verse : <b>{{$index + 1}}</b></a><br>
+<ng-template #fullscreenControlTemplate>
+    <button mat-icon-button [matTooltip]="showInFullscreen ? 'Exit Fullscreen' : 'Fullscreen'"
+        (click)="toggleFullscreen()">
+        <mat-icon *ngIf="!showInFullscreen" class="icon">fullscreen</mat-icon>
+        <mat-icon *ngIf="showInFullscreen" class="icon">fullscreen_exit</mat-icon>
+    </button>
+</ng-template>
+
+<ng-template #bhajanTemplate let-currentSong>
+    <h4 class="text-center font-medium">{{ currentSong.title | titlecase }}</h4>
+    <pre class="text-center">{{ currentSong.lyrics }}</pre>
+</ng-template>
+
+<ng-template #bibleTemplate let-currentBook>
+    <h4 class="text-center font-medium">
+        {{ currentBook?.bookNepali }} - ({{ currentBook?.bookEnglish | titlecase }})
+    </h4>
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(47px,auto))] gap-1 mt-8 sm:mt-10 md:mt-10 lg:mt-10 xl:mt-15">
+        <ng-container *ngFor="let chapter of getChapterList(currentBook); let i = index">
+            <button (click)="getBibleChapter(currentBook, chapter)"
+                [class.active]="isBibleChapterActive(currentBook.bookId, chapter)"
+                class="bg-primary-300 text-white font-normal p-2 rounded-md focus:outline-none text-sm w-12">
+                {{ chapter }}
+            </button>
+        </ng-container>
+    </div>
+    @if (bibleChapterWithVerse.length>0) {
+    <ng-container *ngTemplateOutlet="bibleVerseTemplate; context: { $implicit: currentBook }"></ng-container>
     }
+</ng-template>
+
+<ng-template #bibleVerseTemplate let-currentBook>
+    <div class="space-y-4 p-4 mt-3">
+        @if (currentBook.bookId == bibleChapterWithVerse[0].book) {
+        @for (data of bibleChapterWithVerse; track $index) {
+        <div *ngIf="data.isTitle" class="text-xl font-bold text-center">
+            <h3 [innerHTML]="data.scripture"></h3>
+        </div>
+        <div *ngIf="!data.isTitle" class="flex items-start space-x-2">
+            <strong class="font-semibold text-gray-500 text-sm">{{ data.verse }}.</strong>
+            <span [innerHTML]="data.scripture" class="text-gray-800 leading-loose"></span>
+        </div>
+        }
+        }
+    </div>
+</ng-template>
+
+<ng-template #noDataTemplate>
+    <p class="text-center">No data available. Please select an item to view its content.</p>
 </ng-template>

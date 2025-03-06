@@ -1,5 +1,5 @@
-<div class="reveal p-3 max-w-[700px] mx-auto slide-show-wrapper" [class.fullscreen]="showInFullscreen"
-    (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+<div class="reveal p-3 max-w-[700px] mx-auto slide-show-wrapper relative min-h-screen  bg-white-smokyWhite"
+    [class.fullscreen]="showInFullscreen" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
     <div class="document-actions transition-opacity duration-300 ease-in-out">
         @if (showButton) {
         <ng-container *ngTemplateOutlet="fullscreenControlTemplate"></ng-container>
@@ -19,9 +19,7 @@
 </ng-template>
 
 <ng-template #slideShowTemplate>
-    @for (bhajan of lyricArray; track $index) {
-    <section data-background-color="rgb(239, 239, 238)" data-transition="slide">
-        <pre>{{bhajan}}</pre>
-    </section>
-    }
+    <pre>
+        {{lyricArray}}
+    </pre>
 </ng-template>

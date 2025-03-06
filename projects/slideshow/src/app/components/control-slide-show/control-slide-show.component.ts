@@ -1,23 +1,132 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { io } from "socket.io-client";
+import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { environment } from '../../../environments/environment';
+import { Bible, BibleInfo, Song } from '../song-and-bible/models';
+import { SongBibleService } from '../song-and-bible/services';
+import { selectCurrentBook } from '../store/bible';
+import { selectCurrentSong } from '../store/song';
+import { SongState } from '../store/song/reducers/song.reducer';
 
+export const UrlPath = {
+  BHAJAN: '/bible-bhajan/bhajan',
+  BIBLE: '/bible-bhajan/bible'
+}
 @Component({
   selector: 'app-control-slide-show',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule
   ],
   templateUrl: './control-slide-show.component.html',
   styleUrl: './control-slide-show.component.scss'
 })
 export class ControlSlideShowComponent {
-  lyrics = "\n\nVerse 1:\nमसीह-मसीहको लागि\nविश्\u200dवासीले लडाइँ गर्नुछ\nउनको क्रूसको झन्डा उठाई बोक्\u200d\u200cनुछ,\nmasih-masih-ko laagi\nvishwaasi-le laDaaiň garnu-cha\nun-ko krus-ko jhanDaa\nuThaa-i boknu-cha,\n\n\nजय पाउनुछ, उनले दिन्छन्\u200c\nजय पाउनुछ, अँ जरुर\nख्रीष्ट हुन्\u200c सबैका राजा\nनष्ट हुन्छन्\u200c सब शत्रु।\njai paaunu-cha, un-le dinchan\njai paaunu-cha, aň jarur\nkhrisT hun sabai-kaa raajaa\nnasTa hunchan sab shatru.\n\n\nVerse 2:\nयेशूको लागि\nविश्\u200dवासीले लडाइँ गर्नुछ\nसब ढाढस, बल र सामर्थ ख्रीष्टदेखि पाउनुछ\nyeshu-ko laagi\nvishwaasi-le laDaaiň garnu-cha\nsab DhaaDhasa, bal ra saamartha\nkhrisT-dekhi paaunu-cha\n\n\nन आफ्\u200d\u200cना बलले जित्\u200d\u200cनु\nन आफ्\u200d\u200cना हतियार\nअवश्य सबै लाऔं धर्म\nपुस्तकको अनुसार।\nna aafnaa bal-le jitnu,\nna aafnaa hati-yaara\nabashye sabai laauň dharma-\npustak-ko anusaar.\n\n\nVerse 3:\nयेशूको लागि\nविश्\u200dवासीले लडाइँ गर्नुछ\nयुद्ध गर्ने बेला कम्मर\nसत्यले बाँध्\u200d\u200cनुछ\nyeshu-ko laagi\nvishwaasi-le laDaaiň garnu-cha\nyuddha garne belaa kammar\nsatye-le baaňdhnu-cha\n\n\nविश्\u200dवासको ढाल लगाऔं\nर तरवार आत्माको\nसुसमाचारका जुत्ता\nर कवच धर्मको।\nvishwaas-ko Dhaala lagaauň\nra tar'waar aatmaa-ko\nsu-samaacaar-kaa juttaa\nra kawac dharma-ko.\n\n\nVerse 4:\nयेशूको लागि\nविश्\u200dवासीले लडाइँ गर्नुछ\nआज लडाइँ गर्नुछ\nभोलि जय पाउनुछ\nyeshu-ko laagi\nvishwaasi-le laDaaiň garnu-cha\naaja laDaaiň garnu-cha,\nbholi jai paaunu-cha\n\n\nदिइन्छ स्वर्गे मुकुट\nविजयी सबैलाई\nर स्वर्गमा सधैँ बस्\u200d\u200cनुछ\nविजयको गीत गाउँदै।\ndi-incha sworge mukuT\nbijayi sabai-laai\nra sworga-maa sadhaiň basnu-cha\nbijai-ko git gaauň-dai.";
+  showInFullscreen: boolean = false;
+  showButton: boolean = false;
+  showBhajan: boolean = false;
+  showBible: boolean = false;
 
-  lyricArray: string[] = [];
+  bibleChapterWithVerse: Bible[] = [];
+  selectedBibleChapter: number | null = null;
+  boookId: number | null = null;
 
-  constructor() {
-    this.lyricArray = this.lyrics.split(/\n\n\n+/).map(section => section.trim());
+  @Output()
+  isFullScreen: EventEmitter<boolean> = new EventEmitter();
 
-    console.log(this.lyricArray);
+  private readonly HIDE_BUTTON_TIMEOUT_MS = 3000;
+  private hideButtonTimeout: any;
+  private isMouseInside: boolean = false;
+
+  private readonly destroy$ = new Subject<void>();
+
+  private readonly router = inject(Router);
+  private readonly store = inject(Store<SongState>);
+  private songBibleService = inject(SongBibleService);
+  private socket = io(environment.websocketWebURL);
+
+  currentSong$: Observable<Song | null> = this.store.select(selectCurrentSong);
+  currentBook$: Observable<BibleInfo | null> = this.store.select(selectCurrentBook);
+
+  ngOnInit(): void {
+    this.updateFlagsBasedOnUrl(this.router.url);
+    this.subscribeToUrlChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  getChapterList(currentBook: BibleInfo): number[] {
+    return Array.from({ length: currentBook.chapter - 1 }, (_, i) => i + 1);
+  }
+
+  isBibleChapterActive(bookId: number, chapter: number): boolean {
+    return this.boookId === bookId && this.selectedBibleChapter === chapter;
+  }
+
+  toggleFullscreen(): void {
+    this.showInFullscreen = !this.showInFullscreen;
+    this.isFullScreen.emit(this.showInFullscreen);
+  }
+
+  onMouseEnter(): void {
+    this.isMouseInside = true;
+    this.showButton = true;
+    this.clearHideTimeout();
+  }
+
+  onMouseLeave(): void {
+    this.isMouseInside = false;
+    this.setHideTimeout();
+  }
+
+  getBibleChapter(selectedBibleBook: BibleInfo, chapter: number): void {
+    this.selectedBibleChapter = chapter;
+    this.boookId = selectedBibleBook.bookId;
+    this.songBibleService.getBibleChapter(this.boookId, chapter).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((data) => {
+      this.bibleChapterWithVerse = data ? data : [];
+    })
+  }
+
+  // this.socket.emit("slideChange", bhajan);
+
+  private subscribeToUrlChanges(): void {
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((event) => {
+        this.updateFlagsBasedOnUrl(event.urlAfterRedirects);
+      });
+  }
+
+  private updateFlagsBasedOnUrl(url: string): void {
+    this.showBhajan = url.endsWith(UrlPath.BHAJAN);
+    this.showBible = url.endsWith(UrlPath.BIBLE);
+  }
+
+  private setHideTimeout(): void {
+    this.hideButtonTimeout = setTimeout(() => {
+      if (!this.isMouseInside) {
+        this.showButton = false;
+      }
+    }, this.HIDE_BUTTON_TIMEOUT_MS);
+  }
+
+  private clearHideTimeout(): void {
+    if (this.hideButtonTimeout) {
+      clearTimeout(this.hideButtonTimeout);
+    }
   }
 }

@@ -53,3 +53,11 @@ button.active {
     background-color: #0088d2;
     font-weight: 500;
 }
+
+button {
+    mat-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
