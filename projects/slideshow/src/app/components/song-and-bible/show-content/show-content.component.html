@@ -5,7 +5,7 @@
         <ng-container *ngTemplateOutlet="fullscreenControlTemplate"></ng-container>
         }
     </div>
-    <div class="slides">
+    <div class="slides flex items-center justify-center">
         <ng-container *ngTemplateOutlet="slideShowTemplate"></ng-container>
     </div>
 </div>
@@ -19,7 +19,5 @@
 </ng-template>
 
 <ng-template #slideShowTemplate>
-    <pre>
-        {{lyricArray}}
-    </pre>
+    <pre>{{lyricArray}}</pre>
 </ng-template>

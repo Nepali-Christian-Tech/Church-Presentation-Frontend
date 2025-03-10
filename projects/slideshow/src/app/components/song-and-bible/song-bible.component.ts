@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Renderer2, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MaterialModule } from '../../../../../slideshow-lib/src/public-api';
+import { ControlSlideShowComponent } from './control-slide-show/control-slide-show.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { SlideRendererComponent } from './slide-renderer/slide-renderer.component';
-
 
 @Component({
   selector: 'app-song-bible',
@@ -13,7 +12,7 @@ import { SlideRendererComponent } from './slide-renderer/slide-renderer.componen
     CommonModule,
     MaterialModule,
     SidebarComponent,
-    SlideRendererComponent
+    ControlSlideShowComponent
   ],
   templateUrl: './song-bible.component.html',
   styleUrl: './song-bible.component.scss'

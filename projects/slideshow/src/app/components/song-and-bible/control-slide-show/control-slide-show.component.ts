@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
@@ -19,13 +19,13 @@ export const UrlPath = {
 }
 
 @Component({
-  selector: 'slideshow-slide-renderer',
+  selector: 'app-control-slide-show',
   standalone: true,
   imports: [MaterialModule, CommonModule],
-  templateUrl: './slide-renderer.component.html',
-  styleUrls: ['./slide-renderer.component.scss']
+  templateUrl: './control-slide-show.component.html',
+  styleUrl: './control-slide-show.component.scss'
 })
-export class SlideRendererComponent implements OnInit, OnDestroy {
+export class ControlSlideShowComponent {
 
   showBhajan: boolean = false;
   showBible: boolean = false;
@@ -33,6 +33,10 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   bibleChapterWithVerse: Bible[] = [];
   selectedBibleChapter: number | null = null;
   boookId: number | null = null;
+
+  currentSlideIndex: number = 0;
+  currentSongLyrics: string[] = [];
+  currentSongDetails: Song | null = null;
 
   @Output()
   isFullScreen: EventEmitter<boolean> = new EventEmitter();
@@ -44,10 +48,10 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
   private songBibleService = inject(SongBibleService);
   private socket = io(environment.websocketWebURL);
 
-  currentSong$: Observable<Song | null> = this.store.select(selectCurrentSong);
   currentBook$: Observable<BibleInfo | null> = this.store.select(selectCurrentBook);
 
   ngOnInit(): void {
+    this.getSongFromState();
     this.updateFlagsBasedOnUrl(this.router.url);
     this.subscribeToUrlChanges();
   }
@@ -75,7 +79,44 @@ export class SlideRendererComponent implements OnInit, OnDestroy {
     })
   }
 
-  // this.socket.emit("slideChange", bhajan);
+  showPreviousSlide(): void {
+    if (this.currentSlideIndex > 0) {
+      this.currentSlideIndex--;
+      this.emitSlide();
+    }
+  }
+
+  showNextSlide(): void {
+    if (this.currentSlideIndex < this.currentSongLyrics.length - 1) {
+      this.currentSlideIndex++;
+      this.emitSlide();
+    }
+  }
+
+  private emitSlide(): void {
+    this.socket.emit("slideChange", this.currentSongLyrics[this.currentSlideIndex]);
+  }
+
+  private getSongFromState(): void {
+    this.store.select(selectCurrentSong)
+      .pipe(
+        takeUntil(this.destroy$)
+      ).subscribe((song) => {
+        if (song) {
+          this.currentSongDetails = song;
+          this.currentSongLyrics = song.lyrics.split(/\n\n\n+/).map((section: any) => section.trim());
+
+          this.emitInitialSlideForSong();
+        }
+      });
+  }
+
+  private emitInitialSlideForSong(): void {
+    this.currentSlideIndex = 0;
+    if (this.currentSongLyrics.length > 0) {
+      this.emitSlide();
+    }
+  }
 
   private subscribeToUrlChanges(): void {
     this.router.events

@@ -5,7 +5,6 @@ import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
 import { io } from "socket.io-client";
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 import { environment } from '../../../../environments/environment';
-import { Song } from '../models';
 
 @Component({
   selector: 'slideshow-show-content',
@@ -23,8 +22,6 @@ export class ShowContentComponent {
 
   showButton: boolean = false;
   showBhajan: boolean = false;
-
-  currentSlide: Song | null = null;
 
   private resizeObserver: ResizeObserver | null = null;
 
@@ -59,11 +56,7 @@ export class ShowContentComponent {
 
   private getDataFromWebSocket(): void {
     this.socket.on("updateSlide", (data) => {
-      // console.warn("Slide updated:", data);
-      this.currentSlide = data;
-      // this.lyricArray = data;
-      this.lyricArray = data.lyrics.split(/\n\n\n+/).map((section: any) => section.trim());;
-      console.log("Lyrics: ", this.lyricArray);
+      this.lyricArray = data;
       this.showBhajan = true;
     });
   }
