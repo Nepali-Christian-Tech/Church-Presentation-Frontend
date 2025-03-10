@@ -19,5 +19,9 @@
 </ng-template>
 
 <ng-template #slideShowTemplate>
+    @if (lyricArray.length>0) {
     <pre>{{lyricArray}}</pre>
+    } @else {
+    <p class="text-center text-black">No data available</p>
+    }
 </ng-template>
