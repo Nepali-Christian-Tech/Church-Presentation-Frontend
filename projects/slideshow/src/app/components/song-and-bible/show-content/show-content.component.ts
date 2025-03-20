@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import Reveal from 'reveal.js';
 import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
-import { io } from "socket.io-client";
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
-import { environment } from '../../../../environments/environment';
+import { WebSocketEvents } from '../../../constants';
+import { WebSocketService } from '../services';
 
 @Component({
   selector: 'slideshow-show-content',
@@ -29,10 +29,7 @@ export class ShowContentComponent {
   private hideButtonTimeout: any;
   private isMouseInside: boolean = false;
 
-  private socket = io(environment.websocketWebURL);
-
-  constructor() {
-  }
+  private websocketService = inject(WebSocketService);
 
   ngOnInit(): void {
     this.getDataFromWebSocket();
@@ -55,10 +52,10 @@ export class ShowContentComponent {
   }
 
   private getDataFromWebSocket(): void {
-    this.socket.on("updateSlide", (data) => {
+    this.websocketService.on(WebSocketEvents.SLIDE_UPDATE, (data) => {
       this.lyricArray = data;
       this.showBhajan = true;
-    });
+    })
   }
 
   private initializeRevealJS(): void {

@@ -4,15 +4,14 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { io } from "socket.io-client";
 import { KeyCode } from '../../../../../../slideshow-lib/src/lib/models/key-code.enum';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
-import { environment } from '../../../../environments/environment';
+import { WebSocketEvents } from '../../../constants';
 import { selectCurrentBook } from '../../store/bible';
 import { selectCurrentSong } from '../../store/song';
 import { SongState } from '../../store/song/reducers/song.reducer';
 import { Bible, BibleInfo, Song } from '../models';
-import { SongBibleService } from '../services';
+import { SongBibleService, WebSocketService } from '../services';
 
 export const UrlPath = {
   BHAJAN: '/bible-bhajan/bhajan',
@@ -47,7 +46,8 @@ export class ControlSlideShowComponent {
   private readonly router = inject(Router);
   private readonly store = inject(Store<SongState>);
   private songBibleService = inject(SongBibleService);
-  private socket = io(environment.websocketWebURL);
+  // private socket = io(environment.websocketWebURL);
+  private websocketService = inject(WebSocketService);
 
   currentBook$: Observable<BibleInfo | null> = this.store.select(selectCurrentBook);
 
@@ -104,7 +104,7 @@ export class ControlSlideShowComponent {
   }
 
   private emitSlide(): void {
-    this.socket.emit("slideChange", this.currentSongLyrics[this.currentSlideIndex]);
+    this.websocketService.emit(WebSocketEvents.SLIDE_CHANGE, this.currentSongLyrics[this.currentSlideIndex]);
   }
 
   private getSongFromState(): void {
