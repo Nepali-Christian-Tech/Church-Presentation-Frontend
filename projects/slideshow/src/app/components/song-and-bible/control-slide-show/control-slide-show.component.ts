@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, inject, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { io } from "socket.io-client";
+import { KeyCode } from '../../../../../../slideshow-lib/src/lib/models/key-code.enum';
 import { MaterialModule } from '../../../../../../slideshow-lib/src/public-api';
 import { environment } from '../../../../environments/environment';
 import { selectCurrentBook } from '../../store/bible';
@@ -59,6 +60,15 @@ export class ControlSlideShowComponent {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent): void {
+    if (event.key === KeyCode.ArrowLeft) {
+      this.showPreviousSlide();
+    } else if (event.key === KeyCode.ArrowRight) {
+      this.showNextSlide();
+    }
   }
 
   getChapterList(currentBook: BibleInfo): number[] {

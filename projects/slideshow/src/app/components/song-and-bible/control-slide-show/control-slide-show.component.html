@@ -16,7 +16,8 @@
         <div class="relative flex items-center justify-between w-[30vw] h-[30vw] max-w-40 max-h-40 min-w-20 min-h-20 
         bg-gray-800 rounded-full border-2 border-gray-600 p-3">
 
-            <button mat-icon-button (click)="showPreviousSlide()" [disabled]="currentSlideIndex === 0">
+            <button class="bg-secondary-400 rounded-md disabled:opacity-50 disabled:pointer-events-none"
+                (click)="showPreviousSlide()" [disabled]="currentSlideIndex === 0">
                 <mat-icon class="text-white-smokyWhite text-[2vw] sm:text-xl md:text-2xl lg:text-3xl">
                     chevron_left
                 </mat-icon>
@@ -24,8 +25,8 @@
             <div class="h-[30vw] max-h-40 min-h-20 w-1 bg-white-smokyWhite">
                 <div class="bg-white-smokyWhite"></div>
             </div>
-            <button mat-icon-butto (click)="showNextSlide()"
-                [disabled]="currentSlideIndex === currentSongLyrics.length - 1">
+            <button class="bg-secondary-400 rounded-md disabled:opacity-50 disabled:pointer-events-none"
+                (click)="showNextSlide()" [disabled]="currentSlideIndex === currentSongLyrics.length - 1">
                 <mat-icon class="text-white-smokyWhite text-[2vw] sm:text-xl md:text-2xl lg:text-3xl">
                     chevron_right
                 </mat-icon>
