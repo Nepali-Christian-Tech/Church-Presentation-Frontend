@@ -2,7 +2,8 @@ import dotenv from 'dotenv';
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import { CONFIG, SOCKET_EVENTS } from "./constant.js";
+import { CONFIG, CONNECTION_STATUS, SOCKET_EVENTS, isClientInLocalNetwork } from './utils/index.js';
+
 
 dotenv.config();
 
@@ -17,6 +18,19 @@ const io = new Server(server, {
         origin: CONFIG.CLIENT_ORIGINS,
         methods: CONFIG.CORS_METHODS,
     },
+});
+
+io.use((socket, next) => {
+    // Get the client's IP address from the WebSocket handshake
+    const clientIP = socket.handshake.address;
+
+    if (isClientInLocalNetwork(clientIP)) {
+        socket.emit('connection_status', CONNECTION_STATUS.SUCCESS);
+        return next();
+    }
+
+    socket.emit('connection_status', CONNECTION_STATUS.ERROR);
+    return next(new Error('Connection not allowed from this IP'));
 });
 
 io.on("connection", (socket) => {

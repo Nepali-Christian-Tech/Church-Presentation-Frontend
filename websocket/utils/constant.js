@@ -12,3 +12,14 @@ export const SOCKET_EVENTS = {
     SLIDE_CHANGE: "slideChange",
     UPDATE_SLIDE: "updateSlide",
 };
+
+export const CONNECTION_STATUS = {
+    SUCCESS: {
+        status: 'success',
+        message: 'Successfully connected to the local network.',
+    },
+    ERROR: {
+        status: 'error',
+        message: 'Connection failed. Please ensure you are connected to the same network as the server.',
+    },
+};
